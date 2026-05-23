@@ -1,0 +1,125 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const members = (await getCollection('team', (e) => e.data.locale === locale)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const rendered = await Promise.all(
+  members.map(async (m) => ({ data: m.data, Content: (await render(m)).Content }))
+);
+
+const copy = {
+  en: {
+    eyebrow: 'Team',
+    title: 'The people behind TYPE10',
+    lead: 'Deliberately small, deliberately senior. The person you talk to is the person who does the work.',
+    profile: 'Skill profile (PDF)',
+  },
+  de: {
+    eyebrow: 'Team',
+    title: 'Die Menschen hinter TYPE10',
+    lead: 'Bewusst klein, bewusst erfahren. Die Person, mit der Sie sprechen, ist die Person, die die Arbeit macht.',
+    profile: 'Skill-Profil (PDF)',
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.team') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container">
+    {
+      rendered.map(({ data, Content }) => (
+        <article class="member">
+          <div class="member-side">
+            {data.image && <img src={data.image} alt={data.name} width="320" height="320" />}
+            <h2>{data.name}</h2>
+            <p class="role">{data.jobtitle}</p>
+            <ul class="social">
+              {data.links.github && (<li><a href={data.links.github} rel="noopener" target="_blank">GitHub</a></li>)}
+              {data.links.linkedin && (<li><a href={data.links.linkedin} rel="noopener" target="_blank">LinkedIn</a></li>)}
+              {data.links.xing && (<li><a href={data.links.xing} rel="noopener" target="_blank">Xing</a></li>)}
+              {data.links.twitter && (<li><a href={data.links.twitter} rel="noopener" target="_blank">Twitter</a></li>)}
+            </ul>
+            {data.skillProfile && (
+              <a class="btn btn-ghost" href={data.skillProfile} target="_blank" rel="noopener">{copy.profile}</a>
+            )}
+          </div>
+          <div class="member-bio prose">
+            <Content />
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .member {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .member + .member {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 760px) {
+    .member {
+      grid-template-columns: 300px minmax(0, 1fr);
+    }
+  }
+  .member-side img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    margin-bottom: var(--space-3);
+  }
+  .member-side h2 {
+    font-size: var(--step-2);
+  }
+  .role {
+    color: var(--brand);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+  .social {
+    list-style: none;
+    margin: 0 0 var(--space-3);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--step--1);
+  }
+</style>

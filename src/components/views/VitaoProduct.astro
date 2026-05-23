@@ -1,0 +1,146 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const copy = {
+  en: {
+    eyebrow: 'Our product',
+    title: 'Vitao — the honest AI résumé builder',
+    lead: 'An ATS-optimized résumé builder with AI assistance and a fair one-time price — built and operated by TYPE10.',
+    intro:
+      'Vitao helps job seekers create résumés that pass applicant tracking systems and convince the humans behind them. No subscription traps: one fair price, lifetime access.',
+    primaryCta: 'Try Vitao at vitao.io',
+    featuresHeading: 'What Vitao does',
+    features: [
+      ['ATS-optimized templates', 'Every template is engineered to pass recruiter screening systems.'],
+      ['AI writing help', 'Generate summaries and bullet points, and get your résumé reviewed.'],
+      ['Job-matching analysis', 'Tailoring suggestions and gap scoring against a specific job.'],
+      ['PDF & Word export', 'Pixel-perfect export in the formats recruiters expect.'],
+      ['Privacy-first', 'Your data is encrypted and never sold or shared.'],
+      ['Honest one-time price', 'A single payment with lifetime access — no recurring fees.'],
+    ],
+    builtHeading: 'Built by TYPE10',
+    builtText:
+      'Vitao is where we prove our product-engineering practice on our own dime. Read how we built it in the case study, or see the practice behind it.',
+    caseStudyCta: 'Read the Vitao case study',
+    serviceCta: 'Our product engineering',
+    finalHeading: 'See it for yourself',
+    finalText: 'The fastest way to understand Vitao is to try it.',
+    finalCta: 'Go to vitao.io',
+  },
+  de: {
+    eyebrow: 'Unser Produkt',
+    title: 'Vitao — der ehrliche KI-Lebenslauf-Builder',
+    lead: 'Ein ATS-optimierter Lebenslauf-Builder mit KI-Unterstützung und fairem Einmalpreis — von TYPE10 gebaut und betrieben.',
+    intro:
+      'Vitao hilft Bewerber:innen, Lebensläufe zu erstellen, die Bewerbermanagementsysteme passieren und die Menschen dahinter überzeugen. Keine Abo-Fallen: ein fairer Preis, lebenslanger Zugang.',
+    primaryCta: 'Vitao auf vitao.io ausprobieren',
+    featuresHeading: 'Was Vitao kann',
+    features: [
+      ['ATS-optimierte Vorlagen', 'Jede Vorlage ist darauf ausgelegt, Recruiting-Screening-Systeme zu passieren.'],
+      ['KI-Schreibhilfe', 'Zusammenfassungen und Stichpunkte generieren und den Lebenslauf prüfen lassen.'],
+      ['Job-Matching-Analyse', 'Anpassungsvorschläge und Gap-Scoring gegen eine konkrete Stelle.'],
+      ['PDF- & Word-Export', 'Pixelgenauer Export in den Formaten, die Recruiter erwarten.'],
+      ['Datenschutz zuerst', 'Ihre Daten sind verschlüsselt und werden nie verkauft oder geteilt.'],
+      ['Fairer Einmalpreis', 'Eine einzige Zahlung mit lebenslangem Zugang — keine wiederkehrenden Gebühren.'],
+    ],
+    builtHeading: 'Von TYPE10 gebaut',
+    builtText:
+      'Vitao ist der Ort, an dem wir unsere Produktentwicklung am eigenen Produkt beweisen. Lesen Sie in der Case Study, wie wir es gebaut haben, oder sehen Sie die Disziplin dahinter.',
+    caseStudyCta: 'Vitao Case Study lesen',
+    serviceCta: 'Unsere Produktentwicklung',
+    finalHeading: 'Überzeugen Sie sich selbst',
+    finalText: 'Am schnellsten verstehen Sie Vitao, wenn Sie es ausprobieren.',
+    finalCta: 'Zu vitao.io',
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: 'Vitao' },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow">
+    <p class="lead">{copy.intro}</p>
+    <p style="margin-top: var(--space-3)">
+      <a class="btn btn-primary" href="https://vitao.io" target="_blank" rel="noopener">{copy.primaryCta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section surface-alt">
+  <div class="container">
+    <h2>{copy.featuresHeading}</h2>
+    <div class="grid grid-3 feature-grid">
+      {
+        copy.features.map(([title, text]) => (
+          <div class="feature">
+            <h3>{title}</h3>
+            <p class="muted">{text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container container-narrow">
+    <h2>{copy.builtHeading}</h2>
+    <p class="lead">{copy.builtText}</p>
+    <div class="built-links">
+      <a class="arrow-link" href={localizedPath('work', locale, 'vitao')}>{copy.caseStudyCta}</a>
+      <a class="arrow-link" href={localizedPath('services', locale, 'product-engineering')}>{copy.serviceCta}</a>
+    </div>
+  </div>
+</section>
+
+<CTA
+  heading={copy.finalHeading}
+  text={copy.finalText}
+  buttonLabel={copy.finalCta}
+  buttonHref="https://vitao.io"
+/>
+
+<style>
+  .feature-grid {
+    margin-top: var(--space-4);
+  }
+  .feature {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+  .feature h3 {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-1);
+  }
+  .feature p {
+    font-size: var(--step--1);
+  }
+  .built-links {
+    margin-top: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+</style>

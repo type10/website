@@ -1,0 +1,119 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import PageHeader from '../PageHeader.astro';
+import CaseStudyCard from '../CaseStudyCard.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'technologies'>;
+}
+const { locale, entry } = Astro.props;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+const allCases = await getCollection('caseStudies', (e) => e.data.locale === locale);
+const cases = entry.data.relatedCaseStudies
+  .map((s) => allCases.find((c) => c.data.slug === s))
+  .filter((c): c is CollectionEntry<'caseStudies'> => Boolean(c));
+
+const allServices = await getCollection('services', (e) => e.data.locale === locale);
+const services = entry.data.relatedServices
+  .map((s) => allServices.find((x) => x.data.slug === s))
+  .filter((s): s is CollectionEntry<'services'> => Boolean(s));
+
+const labels = {
+  en: { services: 'Related services', work: 'Selected work' },
+  de: { services: 'Passende Leistungen', work: 'Ausgewählte Projekte' },
+}[locale];
+---
+
+<PageHeader eyebrow={t('nav.technologies')} title={entry.data.title} lead={entry.data.summary}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.technologies'), href: localizedPath('technologies', locale) },
+      { label: entry.data.title },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow prose">
+    <Content />
+  </div>
+</section>
+
+{
+  services.length > 0 && (
+    <section class="section surface-alt">
+      <div class="container">
+        <h2>{labels.services}</h2>
+        <ul class="chip-links">
+          {services.map((s) => (
+            <li>
+              <a href={localizedPath('services', locale, s.data.slug)}>{s.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+{
+  cases.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>{labels.work}</h2>
+        <div class="grid grid-3 related-grid">
+          {cases.map((c) => (
+            <CaseStudyCard locale={locale} entry={c} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .chip-links {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .chip-links a {
+    display: inline-block;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.4em 1em;
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+  .chip-links a:hover {
+    border-color: var(--brand);
+    color: var(--brand);
+    text-decoration: none;
+  }
+  .related-grid {
+    margin-top: var(--space-4);
+  }
+</style>

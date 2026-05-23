@@ -1,0 +1,65 @@
+---
+import { domains } from '../i18n/routes';
+import type { Locale } from '../i18n/routes';
+
+interface Crumb {
+  label: string;
+  href?: string; // in-site path; omit for the current page
+}
+interface Props {
+  locale: Locale;
+  items: Crumb[];
+}
+const { locale, items } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    ...(c.href ? { item: domains[locale] + c.href } : {}),
+  })),
+};
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {
+      items.map((c) => (
+        <li>
+          {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+<style>
+  .breadcrumbs ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    font-size: var(--step--1);
+    color: var(--ink-500);
+  }
+  .breadcrumbs li:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5em;
+    color: var(--ink-400);
+  }
+  .breadcrumbs a {
+    color: var(--ink-500);
+  }
+  .breadcrumbs a:hover {
+    color: var(--brand);
+  }
+  .breadcrumbs [aria-current='page'] {
+    color: var(--ink-700);
+  }
+</style>

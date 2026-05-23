@@ -1,0 +1,172 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+// NOTE: This is a thorough GDPR/DSGVO template tailored to this site's actual
+// processing (Cloudflare hosting, self-hosted fonts, GA4 behind consent).
+// It MUST be reviewed by legal counsel before launch — see the launch checklist.
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const content = {
+  en: {
+    eyebrow: 'Legal',
+    title: 'Privacy Policy',
+    lead: 'How we handle personal data when you use type10.com.',
+    sections: [
+      {
+        h: 'Controller',
+        p: [
+          'The controller responsible for processing personal data on this website is TYPE10 Media GmbH, Einseleweg 1, 81377 München, Germany. Email: info@type10.com.',
+        ],
+      },
+      {
+        h: 'Hosting',
+        p: [
+          'This website is hosted on Cloudflare Pages (Cloudflare, Inc.). When you access the site, Cloudflare automatically processes connection data — including your IP address, the requested URL, date and time, referrer and your browser and operating system — in server log files.',
+          'This processing is necessary to deliver the website securely and reliably and is based on our legitimate interest (Art. 6(1)(f) GDPR). A data processing agreement is in place with the provider.',
+        ],
+      },
+      {
+        h: 'Cookies and consent',
+        p: [
+          'We only set non-essential cookies or similar technologies (e.g. for analytics) after you have given your consent via our cookie banner (Art. 6(1)(a) GDPR). You can withdraw your consent at any time with effect for the future. Strictly necessary technical storage that is required to operate the site does not require consent.',
+        ],
+      },
+      {
+        h: 'Web analytics (Google Analytics 4)',
+        p: [
+          'If you consent, we use Google Analytics 4, a service provided by Google Ireland Ltd., to understand how visitors use our site. GA4 sets cookies and processes usage data; IP addresses are truncated and not stored in full. No analytics data is collected before you consent, and you can withdraw your consent at any time via the cookie settings.',
+          'Where data is transferred to Google LLC in the USA, this takes place on the basis of the EU standard contractual clauses.',
+        ],
+      },
+      {
+        h: 'Web fonts',
+        p: [
+          'All fonts used on this site are self-hosted. No connection to Google Fonts or any other third-party font provider is established when you visit the site, so no font-related data is transmitted to third parties.',
+        ],
+      },
+      {
+        h: 'Contacting us',
+        p: [
+          'If you contact us by email, we process the data you provide (such as your name, email address and message) in order to handle your request, on the basis of Art. 6(1)(b) and (f) GDPR. We retain this data only for as long as necessary to deal with your enquiry.',
+        ],
+      },
+      {
+        h: 'Your rights',
+        p: [
+          'Under the GDPR you have the right to access your personal data and to request its rectification, erasure or the restriction of its processing. You also have the right to data portability and the right to object to processing. To exercise any of these rights, please contact info@type10.com.',
+        ],
+      },
+      {
+        h: 'Right to lodge a complaint',
+        p: [
+          'You have the right to lodge a complaint with a data protection supervisory authority. The authority competent for us is the Bayerisches Landesamt für Datenschutzaufsicht (BayLDA).',
+        ],
+      },
+      {
+        h: 'Changes to this policy',
+        p: [
+          'We may update this privacy policy to reflect changes in our processing activities or in legal requirements. The version published here always applies.',
+        ],
+      },
+    ],
+  },
+  de: {
+    eyebrow: 'Rechtliches',
+    title: 'Datenschutzerklärung',
+    lead: 'Wie wir mit personenbezogenen Daten umgehen, wenn Sie type10.de nutzen.',
+    sections: [
+      {
+        h: 'Verantwortlicher',
+        p: [
+          'Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist die TYPE10 Media GmbH, Einseleweg 1, 81377 München, Deutschland. E-Mail: info@type10.com.',
+        ],
+      },
+      {
+        h: 'Hosting',
+        p: [
+          'Diese Website wird auf Cloudflare Pages (Cloudflare, Inc.) gehostet. Beim Aufruf der Website verarbeitet Cloudflare automatisch Verbindungsdaten — darunter Ihre IP-Adresse, die aufgerufene URL, Datum und Uhrzeit, den Referrer sowie Ihren Browser und Ihr Betriebssystem — in Server-Logfiles.',
+          'Diese Verarbeitung ist erforderlich, um die Website sicher und zuverlässig auszuliefern, und beruht auf unserem berechtigten Interesse (Art. 6 Abs. 1 lit. f DSGVO). Mit dem Anbieter besteht ein Auftragsverarbeitungsvertrag.',
+        ],
+      },
+      {
+        h: 'Cookies und Einwilligung',
+        p: [
+          'Nicht notwendige Cookies oder ähnliche Technologien (z. B. für Analyse) setzen wir erst, nachdem Sie über unseren Cookie-Banner eingewilligt haben (Art. 6 Abs. 1 lit. a DSGVO). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Technisch notwendige Speicherung, die für den Betrieb der Seite erforderlich ist, bedarf keiner Einwilligung.',
+        ],
+      },
+      {
+        h: 'Webanalyse (Google Analytics 4)',
+        p: [
+          'Sofern Sie einwilligen, nutzen wir Google Analytics 4, einen Dienst der Google Ireland Ltd., um zu verstehen, wie Besucher:innen unsere Website nutzen. GA4 setzt Cookies und verarbeitet Nutzungsdaten; IP-Adressen werden gekürzt und nicht vollständig gespeichert. Vor Ihrer Einwilligung werden keine Analysedaten erhoben; Sie können Ihre Einwilligung jederzeit über die Cookie-Einstellungen widerrufen.',
+          'Soweit Daten an die Google LLC in den USA übermittelt werden, erfolgt dies auf Grundlage der EU-Standardvertragsklauseln.',
+        ],
+      },
+      {
+        h: 'Web-Schriftarten',
+        p: [
+          'Alle auf dieser Website verwendeten Schriftarten werden selbst gehostet. Beim Besuch der Seite wird keine Verbindung zu Google Fonts oder einem anderen Drittanbieter für Schriftarten aufgebaut; es werden somit keine schriftartbezogenen Daten an Dritte übertragen.',
+        ],
+      },
+      {
+        h: 'Kontaktaufnahme',
+        p: [
+          'Wenn Sie uns per E-Mail kontaktieren, verarbeiten wir die von Ihnen angegebenen Daten (z. B. Name, E-Mail-Adresse und Nachricht) zur Bearbeitung Ihrer Anfrage auf Grundlage von Art. 6 Abs. 1 lit. b und f DSGVO. Wir speichern diese Daten nur so lange, wie es zur Bearbeitung erforderlich ist.',
+        ],
+      },
+      {
+        h: 'Ihre Rechte',
+        p: [
+          'Nach der DSGVO haben Sie das Recht auf Auskunft über Ihre personenbezogenen Daten sowie auf Berichtigung, Löschung oder Einschränkung der Verarbeitung. Außerdem haben Sie ein Recht auf Datenübertragbarkeit und ein Widerspruchsrecht gegen die Verarbeitung. Zur Ausübung dieser Rechte wenden Sie sich bitte an info@type10.com.',
+        ],
+      },
+      {
+        h: 'Beschwerderecht',
+        p: [
+          'Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Die für uns zuständige Behörde ist das Bayerische Landesamt für Datenschutzaufsicht (BayLDA).',
+        ],
+      },
+      {
+        h: 'Änderungen dieser Erklärung',
+        p: [
+          'Wir können diese Datenschutzerklärung anpassen, um Änderungen unserer Verarbeitung oder rechtlicher Vorgaben abzubilden. Es gilt jeweils die hier veröffentlichte Fassung.',
+        ],
+      },
+    ],
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={content.eyebrow} title={content.title} lead={content.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.privacy') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow prose">
+    {
+      content.sections.map((s) => (
+        <Fragment>
+          <h2>{s.h}</h2>
+          {s.p.map((para) => (
+            <p>{para}</p>
+          ))}
+        </Fragment>
+      ))
+    }
+  </div>
+</section>

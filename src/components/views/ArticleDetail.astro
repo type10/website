@@ -1,0 +1,68 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import PageHeader from '../PageHeader.astro';
+import CTA from '../CTA.astro';
+import VitaoCallout from '../VitaoCallout.astro';
+import { localizedPath, publicUrl } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import { company } from '../../i18n/site';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'insights'>;
+}
+const { locale, entry } = Astro.props;
+const d = entry.data;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+const fmt = new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.title,
+  description: d.summary,
+  datePublished: d.publishDate.toISOString(),
+  dateModified: (d.updatedDate ?? d.publishDate).toISOString(),
+  author: { '@type': 'Person', name: company.founder },
+  publisher: { '@type': 'Organization', name: company.legalName },
+  mainEntityOfPage: publicUrl('insights', locale, d.slug),
+  inLanguage: locale,
+};
+---
+
+<PageHeader eyebrow={fmt.format(d.publishDate)} title={d.title} lead={d.summary}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.insights'), href: localizedPath('insights', locale) },
+      { label: d.title },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow prose">
+    <Content />
+    {d.relatedProduct === 'vitao' && <VitaoCallout locale={locale} />}
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="container container-narrow">
+    <div class="page-header-crumbs"><slot name="breadcrumbs" /></div>
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-block: clamp(var(--space-5), 4vw + 1rem, var(--space-7)) var(--space-4);
+    background: linear-gradient(180deg, var(--paper-alt), var(--paper));
+  }
+  .page-header h1 {
+    margin-bottom: var(--space-2);
+  }
+  .page-header-crumbs:not(:empty) {
+    margin-bottom: var(--space-3);
+  }
+</style>

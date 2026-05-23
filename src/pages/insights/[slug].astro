@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleDetail from '../../components/views/ArticleDetail.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection(
+    'insights',
+    (e) => e.data.locale === 'en' && !e.data.draft
+  );
+  return items.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const title = d.seo?.title ?? `${d.title} — TYPE10 Media`;
+---
+
+<Base
+  locale="en"
+  routeKey="insights"
+  sub={d.slug}
+  title={title}
+  description={d.seo?.description ?? d.summary}
+  type="article"
+>
+  <ArticleDetail locale="en" entry={entry} />
+</Base>

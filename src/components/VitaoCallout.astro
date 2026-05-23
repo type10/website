@@ -1,0 +1,48 @@
+---
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: 'Built by TYPE10',
+    title: 'Vitao — our AI résumé builder',
+    text: 'We design and operate Vitao, an ATS-optimized résumé builder with AI assistance and an honest one-time price.',
+    cta: 'Visit vitao.io',
+  },
+  de: {
+    eyebrow: 'Von TYPE10 gebaut',
+    title: 'Vitao — unser KI-Lebenslauf-Builder',
+    text: 'Wir entwickeln und betreiben Vitao, einen ATS-optimierten Lebenslauf-Builder mit KI-Unterstützung und fairem Einmalpreis.',
+    cta: 'vitao.io besuchen',
+  },
+}[locale];
+---
+
+<aside class="vitao-callout">
+  <span class="eyebrow">{copy.eyebrow}</span>
+  <h3>{copy.title}</h3>
+  <p>{copy.text}</p>
+  <a class="btn btn-primary" href="https://vitao.io" target="_blank" rel="noopener">{copy.cta}</a>
+</aside>
+
+<style>
+  .vitao-callout {
+    margin-top: var(--space-5);
+    background: linear-gradient(120deg, var(--brand-050), var(--accent-100));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+  .vitao-callout h3 {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-1);
+  }
+  .vitao-callout p {
+    color: var(--ink-700);
+    margin-bottom: var(--space-3);
+  }
+</style>

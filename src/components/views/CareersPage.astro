@@ -1,0 +1,90 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import { company } from '../../i18n/site';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const copy = {
+  en: {
+    eyebrow: 'Careers',
+    title: 'Work at TYPE10',
+    lead: "We're deliberately small and senior. If you're an engineer who likes owning problems end to end, we should talk.",
+    body: [
+      'TYPE10 is a small team of senior engineers. There are no layers of management and no account managers between you and the work — the person who talks to the client is the person who ships.',
+      'We hire rarely and carefully, and we invest in our own products as well as client work. That means real ownership, real variety, and the freedom to do things properly.',
+    ],
+    howHeading: "What it's like",
+    points: [
+      'Senior, generalist work across the whole stack',
+      'Real ownership — you talk to clients and ship to production',
+      'Remote-friendly, rooted in Munich',
+      'Time and budget to build our own products, too',
+    ],
+    applyHeading: 'Open application',
+    applyText:
+      "We don't always have a vacancy open, but we always read good applications. Send a short note about yourself and a link to your GitHub or portfolio.",
+    applyCta: 'Send an application',
+    subject: 'Open application — TYPE10',
+  },
+  de: {
+    eyebrow: 'Karriere',
+    title: 'Arbeiten bei TYPE10',
+    lead: 'Wir sind bewusst klein und erfahren. Wenn Sie Entwickler:in sind und Probleme gern von Anfang bis Ende verantworten, sollten wir reden.',
+    body: [
+      'TYPE10 ist ein kleines Team erfahrener Entwickler:innen. Es gibt keine Management-Ebenen und keine Account-Manager zwischen Ihnen und der Arbeit — wer mit dem Kunden spricht, liefert auch.',
+      'Wir stellen selten und sorgfältig ein und investieren neben Kundenprojekten in eigene Produkte. Das bedeutet echte Verantwortung, echte Vielfalt und die Freiheit, Dinge richtig zu machen.',
+    ],
+    howHeading: 'Wie es ist',
+    points: [
+      'Erfahrene, generalistische Arbeit über den ganzen Stack',
+      'Echte Verantwortung — Sie sprechen mit Kunden und liefern in Produktion',
+      'Remote-freundlich, verwurzelt in München',
+      'Zeit und Budget, auch eigene Produkte zu bauen',
+    ],
+    applyHeading: 'Initiativbewerbung',
+    applyText:
+      'Wir haben nicht immer eine Stelle offen, aber wir lesen gute Bewerbungen immer. Schicken Sie uns ein paar Zeilen über sich und einen Link zu Ihrem GitHub oder Portfolio.',
+    applyCta: 'Bewerbung senden',
+    subject: 'Initiativbewerbung — TYPE10',
+  },
+}[locale];
+
+const mailto = `mailto:${company.email}?subject=${encodeURIComponent(copy.subject)}`;
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.careers') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow prose">
+    {copy.body.map((p) => <p>{p}</p>)}
+    <h2>{copy.howHeading}</h2>
+    <ul>
+      {copy.points.map((p) => <li>{p}</li>)}
+    </ul>
+  </div>
+</section>
+
+<section class="section surface-alt">
+  <div class="container container-narrow">
+    <h2>{copy.applyHeading}</h2>
+    <p class="lead">{copy.applyText}</p>
+    <a class="btn btn-primary" href={mailto}>{copy.applyCta}</a>
+  </div>
+</section>

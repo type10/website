@@ -1,0 +1,56 @@
+---
+import { localizedPath } from '../i18n/routes';
+import type { Locale } from '../i18n/routes';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'services'>;
+}
+const { locale, entry } = Astro.props;
+const d = entry.data;
+const href = localizedPath('services', locale, d.slug);
+---
+
+<a href={href} class="svc-card">
+  {d.icon && <img src={`/assets/icons/${d.icon}.svg`} alt="" aria-hidden="true" width="40" height="40" />}
+  <h3>{d.title}</h3>
+  <p>{d.summary}</p>
+  <span class="more arrow-link" aria-hidden="true"></span>
+</a>
+
+<style>
+  .svc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-1);
+    color: var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .svc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2);
+    border-color: var(--brand-100);
+    text-decoration: none;
+  }
+  .svc-card img {
+    margin-bottom: var(--space-1);
+  }
+  .svc-card h3 {
+    font-size: var(--step-1);
+  }
+  .svc-card p {
+    color: var(--ink-500);
+    font-size: var(--step--1);
+    flex: 1;
+  }
+  .svc-card .more::after {
+    color: var(--brand);
+    font-weight: 700;
+  }
+</style>

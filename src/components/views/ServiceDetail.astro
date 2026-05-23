@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import PageHeader from '../PageHeader.astro';
+import CaseStudyCard from '../CaseStudyCard.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'services'>;
+}
+const { locale, entry } = Astro.props;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+const allCases = await getCollection('caseStudies', (e) => e.data.locale === locale);
+const related = entry.data.relatedCaseStudies
+  .map((slug) => allCases.find((c) => c.data.slug === slug))
+  .filter((c): c is CollectionEntry<'caseStudies'> => Boolean(c));
+---
+
+<PageHeader title={entry.data.title} lead={entry.data.summary}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.services'), href: localizedPath('services', locale) },
+      { label: entry.data.title },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow prose">
+    <Content />
+  </div>
+</section>
+
+{
+  related.length > 0 && (
+    <section class="section surface-alt">
+      <div class="container">
+        <h2>{t('svc.related')}</h2>
+        <div class="grid grid-3 related-grid">
+          {related.map((c) => (
+            <CaseStudyCard locale={locale} entry={c} />
+          ))}
+        </div>
+        <p class="related-all">
+          <a class="arrow-link" href={localizedPath('work', locale)}>
+            {t('svc.allWork')}
+          </a>
+        </p>
+      </div>
+    </section>
+  )
+}
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .related-grid {
+    margin-top: var(--space-4);
+  }
+  .related-all {
+    margin-top: var(--space-4);
+  }
+</style>

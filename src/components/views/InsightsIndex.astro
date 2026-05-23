@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content';
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const posts = (
+  await getCollection('insights', (e) => e.data.locale === locale && !e.data.draft)
+).sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const fmt = new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const copy = {
+  en: {
+    eyebrow: 'Insights',
+    title: 'Insights',
+    lead: 'Notes on building software, scaling platforms and shipping products — including our own.',
+  },
+  de: {
+    eyebrow: 'Insights',
+    title: 'Insights',
+    lead: 'Notizen über Softwareentwicklung, das Skalieren von Plattformen und das Ausliefern von Produkten — auch eigenen.',
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.insights') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow">
+    <ul class="post-list">
+      {
+        posts.map((p) => (
+          <li>
+            <time datetime={p.data.publishDate.toISOString()}>{fmt.format(p.data.publishDate)}</time>
+            <h2>
+              <a href={localizedPath('insights', locale, p.data.slug)}>{p.data.title}</a>
+            </h2>
+            <p>{p.data.summary}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+  }
+  .post-list li {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: var(--space-4);
+  }
+  .post-list time {
+    font-size: var(--step--1);
+    color: var(--ink-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .post-list h2 {
+    font-size: var(--step-2);
+    margin: 0.3em 0;
+  }
+  .post-list h2 a {
+    color: var(--ink);
+  }
+  .post-list h2 a:hover {
+    color: var(--brand);
+    text-decoration: none;
+  }
+  .post-list p {
+    color: var(--ink-500);
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const values = [
+  { icon: 'icon_generalist', key: 'generalist' },
+  { icon: 'icon_knowledge', key: 'knowledge' },
+  { icon: 'icon_care', key: 'care' },
+  { icon: 'icon_communication', key: 'communication' },
+] as const;
+
+const copy = {
+  en: {
+    eyebrow: 'About',
+    title: 'A senior consultancy that builds and ships',
+    lead: 'Deliberately small, deliberately senior — and just as happy operating our own products as advising on yours.',
+    body: [
+      'TYPE10 Media is a Munich-based software and cloud consultancy. Since 2010 we have been the senior engineers behind streaming platforms, marketplaces and comparison engines for companies across media, e-commerce and insurance — among them maxdome, RTL+, AutoScout24, CHECK24 and Lusini.',
+      'We also build and operate our own products, from the DoodleStory game to Vitao, our AI résumé builder. That product habit keeps us honest: we live with the same trade-offs, on-call rotations and release pressure we ask our clients to trust us with.',
+    ],
+    valuesEyebrow: 'How we work',
+    valuesTitle: 'Four principles we actually hold to',
+    values: {
+      generalist: ['Be a generalist', 'Engineers who move across the stack think outside the box — and the right person is always on the problem.'],
+      knowledge: ['Distribute knowledge', 'We document, pair and hand over. Distributing ownership keeps your team independent of us.'],
+      care: ['Care for what you build', 'No one cares how much you know until they know how much you care — so we own quality end to end.'],
+      communication: ['Own the communication chain', 'Direct, senior communication makes us problem-solvers, not a telephone game.'],
+    },
+  },
+  de: {
+    eyebrow: 'Über uns',
+    title: 'Eine erfahrene Beratung, die baut und ausliefert',
+    lead: 'Bewusst klein, bewusst erfahren — und genauso gern Betreiber eigener Produkte wie Berater für Ihre.',
+    body: [
+      'TYPE10 Media ist eine Software- und Cloud-Beratung aus München. Seit 2010 sind wir die erfahrenen Entwickler:innen hinter Streaming-Plattformen, Marktplätzen und Vergleichsportalen für Unternehmen aus Medien, E-Commerce und Versicherung — darunter maxdome, RTL+, AutoScout24, CHECK24 und Lusini.',
+      'Wir bauen und betreiben außerdem eigene Produkte, vom Spiel DoodleStory bis zu Vitao, unserem KI-Lebenslauf-Builder. Diese Produkt-Gewohnheit hält uns ehrlich: Wir leben mit denselben Trade-offs, Rufbereitschaften und dem Release-Druck, die unsere Kunden uns anvertrauen.',
+    ],
+    valuesEyebrow: 'Wie wir arbeiten',
+    valuesTitle: 'Vier Prinzipien, an die wir uns wirklich halten',
+    values: {
+      generalist: ['Generalist sein', 'Entwickler:innen, die sich über den ganzen Stack bewegen, denken über den Tellerrand — und die richtige Person sitzt immer am Problem.'],
+      knowledge: ['Wissen teilen', 'Wir dokumentieren, pairen und übergeben. Verteilte Verantwortung hält Ihr Team unabhängig von uns.'],
+      care: ['Verantwortung übernehmen', 'Niemanden interessiert, wie viel man weiß, bevor klar ist, wie sehr es einem wichtig ist — also verantworten wir Qualität von Anfang bis Ende.'],
+      communication: ['Die Kommunikationskette besitzen', 'Direkte, erfahrene Kommunikation macht uns zu Problemlösern statt zu einem Stille-Post-Spiel.'],
+    },
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.about') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container container-narrow prose">
+    {copy.body.map((p) => <p>{p}</p>)}
+  </div>
+</section>
+
+<section class="section surface-alt">
+  <div class="container">
+    <span class="eyebrow">{copy.valuesEyebrow}</span>
+    <h2>{copy.valuesTitle}</h2>
+    <div class="grid grid-4 values">
+      {
+        values.map((v) => (
+          <div class="value">
+            <img src={`/assets/icons/${v.icon}.svg`} alt="" aria-hidden="true" width="36" height="36" />
+            <h3>{copy.values[v.key][0]}</h3>
+            <p class="muted">{copy.values[v.key][1]}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .values {
+    margin-top: var(--space-4);
+  }
+  .value img {
+    margin-bottom: var(--space-2);
+  }
+  .value h3 {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-1);
+  }
+  .value p {
+    font-size: var(--step--1);
+  }
+</style>

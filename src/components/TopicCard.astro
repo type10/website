@@ -1,0 +1,47 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+}
+const { href, title, summary } = Astro.props;
+---
+
+<a class="topic-card" href={href}>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  <span class="more arrow-link" aria-hidden="true"></span>
+</a>
+
+<style>
+  .topic-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-1);
+    color: var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .topic-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2);
+    border-color: var(--brand-100);
+    text-decoration: none;
+  }
+  .topic-card h3 {
+    font-size: var(--step-1);
+  }
+  .topic-card p {
+    color: var(--ink-500);
+    font-size: var(--step--1);
+    flex: 1;
+  }
+  .topic-card .more::after {
+    color: var(--brand);
+    font-weight: 700;
+  }
+</style>

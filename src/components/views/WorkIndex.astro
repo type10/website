@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CaseStudyCard from '../CaseStudyCard.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const work = (await getCollection('caseStudies', (e) => e.data.locale === locale)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const copy = {
+  en: {
+    eyebrow: 'Our work',
+    title: 'Selected work',
+    lead: "Fifteen years of platforms, marketplaces and products we've helped build, scale and run.",
+  },
+  de: {
+    eyebrow: 'Unsere Arbeit',
+    title: 'Referenzen',
+    lead: 'Fünfzehn Jahre Plattformen, Marktplätze und Produkte, die wir mit aufgebaut, skaliert und betrieben haben.',
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.work') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3">
+      {work.map((c) => <CaseStudyCard locale={locale} entry={c} />)}
+    </div>
+  </div>
+</section>
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>

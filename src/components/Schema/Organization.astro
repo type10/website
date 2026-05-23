@@ -1,0 +1,25 @@
+---
+import { company } from '../../i18n/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://type10.com/#organization',
+  name: company.legalName,
+  url: 'https://type10.com',
+  logo: 'https://type10.com/assets/logo/logo-opengraph.png',
+  email: company.email,
+  telephone: company.phone,
+  founder: { '@type': 'Person', name: company.founder },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: company.address.street,
+    postalCode: company.address.postalCode,
+    addressLocality: company.address.city,
+    addressCountry: company.address.country,
+  },
+  sameAs: ['https://twitter.com/type10media', 'https://github.com/type10'],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

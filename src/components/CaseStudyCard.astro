@@ -1,0 +1,81 @@
+---
+import { localizedPath } from '../i18n/routes';
+import type { Locale } from '../i18n/routes';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'caseStudies'>;
+}
+const { locale, entry } = Astro.props;
+const d = entry.data;
+const href = localizedPath('work', locale, d.slug);
+---
+
+<article class="cs-card">
+  <a href={href} class="cs-media" tabindex="-1" aria-hidden="true">
+    {d.heroImage && <img src={d.heroImage} alt="" loading="lazy" decoding="async" width="640" height="400" />}
+  </a>
+  <div class="cs-body">
+    <p class="cs-client">{d.client}{d.years ? ` · ${d.years}` : ''}</p>
+    <h3><a href={href}>{d.title}</a></h3>
+    <p class="cs-summary">{d.summary}</p>
+    {d.stack.length > 0 && (
+      <ul class="tags">{d.stack.slice(0, 4).map((s) => <li>{s}</li>)}</ul>
+    )}
+  </div>
+</article>
+
+<style>
+  .cs-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cs-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2);
+  }
+  .cs-media {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--paper-alt);
+  }
+  .cs-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cs-body {
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+  .cs-client {
+    font-size: var(--step--1);
+    color: var(--ink-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .cs-body h3 {
+    font-size: var(--step-1);
+  }
+  .cs-body h3 a {
+    color: var(--ink);
+  }
+  .cs-body h3 a:hover {
+    color: var(--brand);
+    text-decoration: none;
+  }
+  .cs-summary {
+    color: var(--ink-500);
+    font-size: var(--step--1);
+  }
+</style>

@@ -2,6 +2,7 @@
 import Hero from './Hero.astro';
 import LogoWall from './LogoWall.astro';
 import CTA from './CTA.astro';
+import Organization from './Schema/Organization.astro';
 import { localizedPath } from '../i18n/routes';
 import type { Locale } from '../i18n/routes';
 
@@ -108,6 +109,8 @@ const copy = {
 
 const c = copy[locale];
 ---
+
+<Organization />
 
 <Hero
   eyebrow={c.heroEyebrow}

@@ -1,0 +1,173 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import PageHeader from '../PageHeader.astro';
+import CaseStudyCard from '../CaseStudyCard.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'caseStudies'>;
+}
+const { locale, entry } = Astro.props;
+const d = entry.data;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+const all = await getCollection(
+  'caseStudies',
+  (e) => e.data.locale === locale && e.data.slug !== d.slug
+);
+let related = all.filter((c) => d.industry && c.data.industry === d.industry);
+if (related.length === 0) related = all.filter((c) => c.data.featured);
+related = related.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+
+<PageHeader eyebrow={d.client} title={d.title} lead={d.summary}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.work'), href: localizedPath('work', locale) },
+      { label: d.title },
+    ]}
+  />
+</PageHeader>
+
+<article class="section">
+  <div class="container cs-layout">
+    <div class="cs-content prose">
+      {d.heroImage && <img class="cs-hero" src={d.heroImage} alt={d.title} width="1200" height="750" />}
+      <Content />
+      {
+        d.gallery.length > 0 && (
+          <div class="cs-gallery">
+            {d.gallery.map((src) => (
+              <img src={src} alt="" loading="lazy" decoding="async" width="800" height="500" />
+            ))}
+          </div>
+        )
+      }
+    </div>
+    <aside class="cs-meta">
+      <dl>
+        <dt>{t('cs.client')}</dt>
+        <dd>{d.client}</dd>
+        {
+          d.years && (
+            <Fragment>
+              <dt>{t('cs.year')}</dt>
+              <dd>{d.years}</dd>
+            </Fragment>
+          )
+        }
+        {
+          d.stack.length > 0 && (
+            <Fragment>
+              <dt>{t('cs.stack')}</dt>
+              <dd>
+                <ul class="tags">{d.stack.map((s) => <li>{s}</li>)}</ul>
+              </dd>
+            </Fragment>
+          )
+        }
+      </dl>
+      {
+        d.clientUrl && (
+          <a class="btn btn-ghost cs-visit" href={d.clientUrl} target="_blank" rel="noopener">
+            {t('cs.visit')}
+          </a>
+        )
+      }
+    </aside>
+  </div>
+</article>
+
+{
+  related.length > 0 && (
+    <section class="section surface-alt">
+      <div class="container">
+        <h2>{t('cs.related')}</h2>
+        <div class="grid grid-3 related-grid">
+          {related.map((c) => (
+            <CaseStudyCard locale={locale} entry={c} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .cs-layout {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+  @media (min-width: 880px) {
+    .cs-layout {
+      grid-template-columns: minmax(0, 1fr) 280px;
+    }
+  }
+  .cs-hero {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    margin-bottom: var(--space-4);
+  }
+  .cs-gallery {
+    margin-top: var(--space-4);
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cs-gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+  .cs-meta {
+    position: sticky;
+    top: 90px;
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+  .cs-meta dl {
+    margin: 0 0 var(--space-3);
+    display: grid;
+    gap: var(--space-2);
+  }
+  .cs-meta dt {
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-500);
+  }
+  .cs-meta dd {
+    margin: 0 0 var(--space-2);
+    font-weight: 600;
+  }
+  .cs-visit {
+    width: 100%;
+    justify-content: center;
+  }
+  .related-grid {
+    margin-top: var(--space-4);
+  }
+</style>

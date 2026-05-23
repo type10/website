@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import IndustryDetail from '../../components/views/IndustryDetail.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('industries', (e) => e.data.locale === 'en');
+  return items.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const title = d.seo?.title ?? `${d.title} — TYPE10 Media`;
+---
+
+<Base
+  locale="en"
+  routeKey="industries"
+  sub={d.slug}
+  title={title}
+  description={d.seo?.description ?? d.summary}
+>
+  <IndustryDetail locale="en" entry={entry} />
+</Base>

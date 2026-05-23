@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import PageHeader from '../PageHeader.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import TopicCard from '../TopicCard.astro';
+import CTA from '../CTA.astro';
+import { localizedPath } from '../../i18n/routes';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const items = (await getCollection('industries', (e) => e.data.locale === locale)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const copy = {
+  en: {
+    eyebrow: 'Industries',
+    title: 'Industries we know',
+    lead: "Deep experience in the sectors where we've shipped the most — with the case studies to back it up.",
+  },
+  de: {
+    eyebrow: 'Branchen',
+    title: 'Branchen, die wir kennen',
+    lead: 'Tiefe Erfahrung in den Sektoren, in denen wir am meisten ausgeliefert haben — mit den Referenzen dazu.',
+  },
+}[locale];
+---
+
+<PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
+  <Breadcrumbs
+    slot="breadcrumbs"
+    locale={locale}
+    items={[
+      { label: t('breadcrumb.home'), href: localizedPath('home', locale) },
+      { label: t('nav.industries') },
+    ]}
+  />
+</PageHeader>
+
+<section class="section">
+  <div class="container">
+    <div class="grid grid-2">
+      {
+        items.map((i) => (
+          <TopicCard
+            href={localizedPath('industries', locale, i.data.slug)}
+            title={i.data.title}
+            summary={i.data.summary}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<CTA
+  heading={t('cta.heading')}
+  text={t('cta.text')}
+  buttonLabel={t('cta.contact')}
+  buttonHref={localizedPath('contact', locale)}
+/>

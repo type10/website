@@ -5,7 +5,7 @@ export const company = {
   founder: 'Christian Neuhäuser',
   email: 'info@type10.com',
   phone: '+49 (89) 4161 4848-0',
-  phoneE164: '+498941614848-0',
+  phoneE164: '+4989416148480',
   fax: '+49 (89) 4161 4848-9',
   address: {
     street: 'Einseleweg 1',
