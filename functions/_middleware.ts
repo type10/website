@@ -27,16 +27,74 @@ const addDePrefix = (url: URL): URL => {
   return target;
 };
 
+// 301 map from the old Eleventy (.com) / Jekyll (.de) URLs to the new structure.
+// Returns the new apex path on the SAME host, or null if no redirect applies.
+function legacyTarget(host: string, path: string): string | null {
+  if (host.endsWith('type10.com')) {
+    const work: Record<string, string> = {
+      'maxdome-streaming-platform': 'maxdome',
+      'check24-pkv': 'check24-pkv',
+      autoscout24: 'autoscout24',
+      'rtl-tvnow': 'rtl-tvnow',
+      'tvnow-streaming-platform': 'rtl-tvnow',
+      'organizeme-platform': 'organizeme',
+      'songpier-studio': 'songpier',
+      'type10-doodlestory': 'doodlestory',
+      'lusini-marketplace': 'lusini',
+    };
+    const services: Record<string, string> = {
+      automation: 'cloud-devops',
+      operations: 'cloud-devops',
+      distributed: 'backend-microservices',
+      databases: 'backend-microservices',
+      frontends: 'frontend-web',
+      blockchain: 'blockchain-web3',
+    };
+    const portfolio = path.match(/^\/portfolio\/([^/]+)\/?$/);
+    if (portfolio) return work[portfolio[1]] ? `/work/${work[portfolio[1]]}/` : '/work/';
+    if (path === '/portfolio' || path === '/portfolio/') return '/work/';
+    const svc = path.match(/^\/services\/([^/]+)\/?$/);
+    if (svc && services[svc[1]]) return `/services/${services[svc[1]]}/`;
+    return null;
+  }
+  if (host.endsWith('type10.de')) {
+    const work: Record<string, string> = {
+      'maxdome-steaming-platform': 'maxdome',
+      'check24-pkv-vergleich': 'check24-pkv',
+      'lusini-marketplace': 'lusini',
+      organizeme: 'organizeme',
+      'songpier-studio': 'songpier',
+      'type10-doodlestory': 'doodlestory',
+    };
+    const portfolio = path.match(/^\/portfolio\/([^/]+)\/?$/);
+    if (portfolio) return work[portfolio[1]] ? `/referenzen/${work[portfolio[1]]}/` : '/referenzen/';
+    if (path === '/portfolio' || path === '/portfolio/') return '/referenzen/';
+    if (path === '/blog' || path.startsWith('/blog/')) return '/insights/';
+    return null;
+  }
+  return null;
+}
+
 export const onRequest: PagesFunction<Env> = async (context) => {
   const { request, next, env } = context;
   const url = new URL(request.url);
   const host = (request.headers.get('host') ?? '').toLowerCase();
   const path = url.pathname;
 
+  // ---- legacy 301 redirects from the old sites (run before locale routing) ----
+  const legacy = legacyTarget(host, path);
+  if (legacy && legacy !== path) {
+    const target = new URL(url);
+    target.pathname = legacy;
+    target.search = '';
+    return Response.redirect(target.toString(), 301);
+  }
+
   // ---- type10.de : German served at the apex ----
   if (host.endsWith('type10.de')) {
-    if (path === '/robots.txt') {
-      return env.ASSETS.fetch(new URL('/de/robots.txt', url));
+    // Root files that exist per-locale: serve the German variant on type10.de.
+    if (path === '/robots.txt' || path === '/sitemap.xml') {
+      return env.ASSETS.fetch(new URL('/de' + path, url));
     }
     // Collapse any exposed /de/* to the clean apex URL.
     if (path === DE_PREFIX || path.startsWith(`${DE_PREFIX}/`)) {
@@ -45,7 +103,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       return Response.redirect(target.toString(), 301);
     }
     if (!isAssetPath(path)) {
-      return env.ASSETS.fetch(new Request(addDePrefix(url), request));
+      const res = await env.ASSETS.fetch(new Request(addDePrefix(url), request));
+      if (res.status === 404) {
+        const de404 = await env.ASSETS.fetch(new URL('/de/404/index.html', url));
+        return new Response(de404.body, { status: 404, headers: de404.headers });
+      }
+      return res;
     }
     return next();
   }

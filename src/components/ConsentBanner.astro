@@ -1,0 +1,120 @@
+---
+import { company } from '../i18n/site';
+import { localizedPath } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const GA = company.analytics.ga4Id;
+const t = useTranslations(locale);
+
+const copy = {
+  en: {
+    text: 'We use cookies for analytics — only with your consent.',
+    accept: 'Accept',
+    decline: 'Decline',
+  },
+  de: {
+    text: 'Wir verwenden Cookies zur Analyse — nur mit Ihrer Einwilligung.',
+    accept: 'Akzeptieren',
+    decline: 'Ablehnen',
+  },
+}[locale];
+const privacyHref = localizedPath('privacy', locale);
+---
+
+<div id="t10-consent" class="consent" role="dialog" aria-label="Cookie consent" hidden>
+  <p>{copy.text} <a href={privacyHref}>{t('nav.privacy')}</a></p>
+  <div class="consent-actions">
+    <button type="button" id="t10-decline" class="btn btn-ghost">{copy.decline}</button>
+    <button type="button" id="t10-accept" class="btn btn-primary">{copy.accept}</button>
+  </div>
+</div>
+
+<script define:vars={{ GA }} is:inline>
+  (function () {
+    var KEY = 't10_consent';
+    var el = document.getElementById('t10-consent');
+    function get() {
+      try {
+        return localStorage.getItem(KEY);
+      } catch (e) {
+        return null;
+      }
+    }
+    function set(v) {
+      try {
+        localStorage.setItem(KEY, v);
+      } catch (e) {}
+    }
+    function loadGA() {
+      if (window.__t10ga) return;
+      window.__t10ga = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA, { anonymize_ip: true });
+    }
+    var c = get();
+    if (c === 'granted') {
+      loadGA();
+    } else if (c !== 'denied' && el) {
+      el.hidden = false;
+    }
+    var a = document.getElementById('t10-accept');
+    var d = document.getElementById('t10-decline');
+    if (a)
+      a.addEventListener('click', function () {
+        set('granted');
+        if (el) el.hidden = true;
+        loadGA();
+      });
+    if (d)
+      d.addEventListener('click', function () {
+        set('denied');
+        if (el) el.hidden = true;
+      });
+  })();
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    inset: auto var(--space-3) var(--space-3) var(--space-3);
+    max-width: 540px;
+    margin-inline: auto;
+    z-index: 80;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-2);
+    padding: var(--space-3);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  .consent p {
+    font-size: var(--step--1);
+    margin: 0;
+    flex: 1 1 240px;
+  }
+  .consent-actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+  .consent .btn {
+    padding: 0.6em 1.1em;
+  }
+</style>

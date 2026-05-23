@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "preview:cf": "astro build && wrangler pages dev dist --compatibility-date=2024-05-01 --port 8788",
     "check": "astro check",
+    "check:seo": "node scripts/check-seo.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "@cloudflare/workers-types": "^4.20260523.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.94.0"
   }
 }

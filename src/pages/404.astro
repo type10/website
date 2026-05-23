@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { localizedPath } from '../i18n/routes';
+---
+
+<Base
+  locale="en"
+  routeKey="home"
+  title="Page not found — TYPE10 Media"
+  description="The page you were looking for doesn't exist or has moved."
+  noindex={true}
+>
+  <PageHeader
+    eyebrow="404"
+    title="Page not found"
+    lead="The page you were looking for doesn't exist or has moved."
+  />
+  <section class="section">
+    <div class="container container-narrow">
+      <a class="btn btn-primary" href={localizedPath('home', 'en')}>Back to home</a>
+    </div>
+  </section>
+</Base>

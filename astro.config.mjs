@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 
 // EN is served at the apex of type10.com; DE is built under /de/ and served at the
 // apex of type10.de via a Cloudflare Pages Function (see functions/_middleware.ts).
@@ -19,5 +18,8 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
-  integrations: [react(), mdx(), sitemap()],
+  // Sitemaps are hand-rolled per locale/domain in src/pages/sitemap.xml.ts and
+  // src/pages/de/sitemap.xml.ts — @astrojs/sitemap can't express the two-domain
+  // + localized-slug structure (it would emit type10.com/de/... URLs).
+  integrations: [react(), mdx()],
 });
