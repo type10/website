@@ -1,0 +1,148 @@
+---
+import Logo from './Logo.astro';
+import { localizedPath } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import { company } from '../i18n/site';
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    heading: t('nav.services'),
+    links: [
+      { route: 'services' as const, label: t('nav.services') },
+      { route: 'industries' as const, label: t('nav.industries') },
+      { route: 'technologies' as const, label: t('nav.technologies') },
+      { route: 'work' as const, label: t('nav.work') },
+    ],
+  },
+  {
+    heading: locale === 'de' ? 'Unternehmen' : 'Company',
+    links: [
+      { route: 'about' as const, label: t('nav.about') },
+      { route: 'team' as const, label: t('nav.team') },
+      { route: 'careers' as const, label: t('nav.careers') },
+      { route: 'insights' as const, label: t('nav.insights') },
+    ],
+  },
+  {
+    heading: locale === 'de' ? 'Mehr' : 'More',
+    links: [
+      { route: 'contact' as const, label: t('nav.contact') },
+      { route: 'vitao' as const, label: 'Vitao' },
+      { route: 'imprint' as const, label: t('nav.imprint') },
+      { route: 'privacy' as const, label: t('nav.privacy') },
+    ],
+  },
+];
+---
+
+<footer class="site-footer surface-dark">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <Logo variant="invert" />
+        <p class="muted-dark">{t('site.tagline')}.</p>
+        <address>
+          {company.address.street}<br />
+          {company.address.postalCode}{' '}{company.address.city}<br />
+          <a href={`mailto:${company.email}`}>{company.email}</a><br />
+          <a href={`tel:${company.phoneE164}`}>{company.phone}</a>
+        </address>
+      </div>
+      {
+        columns.map((col) => (
+          <nav class="footer-col" aria-label={col.heading}>
+            <h4>{col.heading}</h4>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={localizedPath(l.route, locale)}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {company.legalName}</span>
+      <span>{company.registration.hrb} · {company.registration.vatId}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-6) var(--space-4);
+  }
+  .footer-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .footer-grid {
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+    }
+  }
+  .footer-brand :global(.logo) {
+    height: 24px;
+    margin-bottom: var(--space-2);
+  }
+  .muted-dark {
+    color: #aaa3c4;
+    max-width: 32ch;
+    margin-bottom: var(--space-3);
+  }
+  address {
+    font-style: normal;
+    color: #c9c5da;
+    font-size: var(--step--1);
+    line-height: 1.9;
+  }
+  address a {
+    color: #c9c5da;
+  }
+  address a:hover {
+    color: var(--accent);
+  }
+  .footer-col h4 {
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: var(--space-2);
+  }
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6em;
+  }
+  .footer-col a {
+    color: #c9c5da;
+    font-size: var(--step--1);
+  }
+  .footer-col a:hover {
+    color: #fff;
+  }
+  .footer-bottom {
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    color: #8e87ab;
+    font-size: var(--step--1);
+  }
+</style>

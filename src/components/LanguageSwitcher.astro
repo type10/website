@@ -1,0 +1,38 @@
+---
+import { publicUrl, otherLocale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import type { Locale, RouteKey } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+  routeKey: RouteKey;
+  sub?: string;
+}
+const { locale, routeKey, sub } = Astro.props;
+const target = otherLocale(locale);
+// Cross-domain absolute URL to the equivalent page in the other language.
+const href = publicUrl(routeKey, target, sub);
+const t = useTranslations(locale);
+---
+
+<a class="lang-switch" href={href} hreflang={target} lang={target} rel="alternate">
+  <span aria-hidden="true">{target.toUpperCase()}</span>
+  <span class="visually-hidden">{t('lang.switch')}</span>
+</a>
+
+<style>
+  .lang-switch {
+    font-weight: 600;
+    font-size: var(--step--1);
+    color: var(--ink-700);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.4em 0.7em;
+    line-height: 1;
+  }
+  .lang-switch:hover {
+    text-decoration: none;
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+</style>

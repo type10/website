@@ -1,0 +1,24 @@
+---
+interface Props {
+  variant?: 'default' | 'invert';
+  class?: string;
+}
+const { variant = 'default', class: className = '' } = Astro.props;
+const src = variant === 'invert' ? '/assets/logo/logo-invert.svg' : '/assets/logo/logo.svg';
+---
+
+<img
+  src={src}
+  alt="TYPE10 Media"
+  width="313"
+  height="19"
+  class={`logo ${className}`}
+  loading="eager"
+/>
+
+<style>
+  .logo {
+    height: 22px;
+    width: auto;
+  }
+</style>

@@ -1,0 +1,241 @@
+---
+import Hero from './Hero.astro';
+import LogoWall from './LogoWall.astro';
+import CTA from './CTA.astro';
+import { localizedPath } from '../i18n/routes';
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const services = [
+  { icon: 'icon_communication', key: 'cloud' },
+  { icon: 'icon_generalist', key: 'backend' },
+  { icon: 'icon_knowledge', key: 'frontend' },
+  { icon: 'icon_care', key: 'web3' },
+  { icon: 'icon_generalist', key: 'product' },
+] as const;
+
+const values = [
+  { icon: 'icon_generalist', key: 'generalist' },
+  { icon: 'icon_knowledge', key: 'knowledge' },
+  { icon: 'icon_care', key: 'care' },
+  { icon: 'icon_communication', key: 'communication' },
+] as const;
+
+const copy = {
+  en: {
+    heroEyebrow: 'Software & cloud consultancy · Munich',
+    heroTitle: 'Powering a <span class="hl">digitalized</span> world',
+    heroLead:
+      "TYPE10 Media is a senior engineering consultancy. For over 15 years we've architected, built and scaled streaming platforms, marketplaces and comparison engines — for clients like maxdome, AutoScout24 and CHECK24 — and we ship our own products, too.",
+    heroPrimary: 'Start a project',
+    heroSecondary: 'See our work',
+    logowall: 'Trusted by teams shipping at scale',
+    servicesEyebrow: 'What we do',
+    servicesTitle: 'Engineering across the full stack',
+    servicesLead:
+      'Five focused practices, one senior team. We embed with your engineers or run delivery end-to-end.',
+    servicesCta: 'Explore all services',
+    services: {
+      cloud: ['Cloud & DevOps', 'Cloud architecture, Kubernetes, CI/CD and observability that keep production calm.'],
+      backend: ['Backend & Microservices', 'Distributed service backends and data layers built for throughput and reliability.'],
+      frontend: ['Web Frontends', 'Fast, accessible React frontends and design systems your team can own.'],
+      web3: ['Blockchain & Web3', 'Smart contracts, dApps and integrations — pragmatic, audited, production-grade.'],
+      product: ['Product Engineering', 'From MVP to scale: we build and run SaaS products, including our own.'],
+    },
+    valuesEyebrow: 'How we work',
+    valuesTitle: 'Senior by default, generalist by principle',
+    values: {
+      generalist: ['Be a generalist', 'We hire engineers who move across the stack, so the right person is always on the problem.'],
+      knowledge: ['Distribute knowledge', 'No single points of failure. We document, pair and hand over so your team stays independent.'],
+      care: ['Care for what you build', 'We own quality end-to-end — from architecture to the 3am pager.'],
+      communication: ['Own the communication chain', 'Direct, senior communication with no account-manager telephone game.'],
+    },
+    vitaoEyebrow: 'Our product',
+    vitaoTitle: 'Vitao — the honest AI résumé builder',
+    vitaoText:
+      "We design and operate Vitao: an ATS-optimized résumé builder with AI assistance and a fair one-time price. It's how we prove our product-engineering practice on our own dime.",
+    vitaoPrimary: 'Visit vitao.io',
+    vitaoSecondary: 'Read the case study',
+    ctaHeading: "Let's build something that lasts",
+    ctaText:
+      "Tell us about your platform, your roadmap or the team you're scaling. We'll reply within a working day.",
+    ctaButton: 'Get in touch',
+  },
+  de: {
+    heroEyebrow: 'Software- & Cloud-Beratung · München',
+    heroTitle: 'Wir treiben eine <span class="hl">digitalisierte</span> Welt voran',
+    heroLead:
+      'TYPE10 Media ist eine Beratung aus erfahrenen Entwickler:innen. Seit über 15 Jahren konzipieren, bauen und skalieren wir Streaming-Plattformen, Marktplätze und Vergleichsportale — für Kunden wie maxdome, AutoScout24 und CHECK24 — und entwickeln eigene Produkte.',
+    heroPrimary: 'Projekt starten',
+    heroSecondary: 'Referenzen ansehen',
+    logowall: 'Vertrauen von Teams, die im großen Maßstab liefern',
+    servicesEyebrow: 'Was wir tun',
+    servicesTitle: 'Engineering über den gesamten Stack',
+    servicesLead:
+      'Fünf fokussierte Disziplinen, ein erfahrenes Team. Wir verstärken Ihre Entwickler:innen oder übernehmen die Umsetzung komplett.',
+    servicesCta: 'Alle Leistungen ansehen',
+    services: {
+      cloud: ['Cloud & DevOps', 'Cloud-Architektur, Kubernetes, CI/CD und Observability, die den Betrieb ruhig halten.'],
+      backend: ['Backend & Microservices', 'Verteilte Service-Backends und Datenschichten für Durchsatz und Zuverlässigkeit.'],
+      frontend: ['Web-Frontends', 'Schnelle, barrierefreie React-Frontends und Design-Systeme, die Ihr Team selbst pflegt.'],
+      web3: ['Blockchain & Web3', 'Smart Contracts, dApps und Integrationen — pragmatisch, auditiert, produktionsreif.'],
+      product: ['Produktentwicklung', 'Vom MVP bis zur Skalierung: Wir bauen und betreiben SaaS-Produkte, auch eigene.'],
+    },
+    valuesEyebrow: 'Wie wir arbeiten',
+    valuesTitle: 'Erfahren als Standard, Generalist aus Prinzip',
+    values: {
+      generalist: ['Generalist sein', 'Wir stellen Entwickler:innen ein, die sich über den ganzen Stack bewegen — so sitzt immer die richtige Person am Problem.'],
+      knowledge: ['Wissen teilen', 'Keine Single Points of Failure. Wir dokumentieren, pairen und übergeben, damit Ihr Team unabhängig bleibt.'],
+      care: ['Verantwortung übernehmen', 'Wir verantworten Qualität von der Architektur bis zum Pager um 3 Uhr nachts.'],
+      communication: ['Die Kommunikationskette besitzen', 'Direkte Kommunikation mit erfahrenen Leuten — kein Stille-Post über Account-Manager.'],
+    },
+    vitaoEyebrow: 'Unser Produkt',
+    vitaoTitle: 'Vitao — der ehrliche KI-Lebenslauf-Builder',
+    vitaoText:
+      'Wir entwickeln und betreiben Vitao: einen ATS-optimierten Lebenslauf-Builder mit KI-Unterstützung und fairem Einmalpreis. So beweisen wir unsere Produktentwicklung am eigenen Produkt.',
+    vitaoPrimary: 'vitao.io besuchen',
+    vitaoSecondary: 'Case Study lesen',
+    ctaHeading: 'Lassen Sie uns etwas Beständiges bauen',
+    ctaText:
+      'Erzählen Sie uns von Ihrer Plattform, Ihrer Roadmap oder dem Team, das Sie skalieren. Wir antworten innerhalb eines Werktags.',
+    ctaButton: 'Kontakt aufnehmen',
+  },
+} as const;
+
+const c = copy[locale];
+---
+
+<Hero
+  eyebrow={c.heroEyebrow}
+  title={c.heroTitle}
+  lead={c.heroLead}
+  primary={{ label: c.heroPrimary, href: localizedPath('contact', locale) }}
+  secondary={{ label: c.heroSecondary, href: localizedPath('work', locale) }}
+/>
+
+<LogoWall heading={c.logowall} />
+
+<section class="section surface-alt">
+  <div class="container">
+    <span class="eyebrow">{c.servicesEyebrow}</span>
+    <h2>{c.servicesTitle}</h2>
+    <p class="lead">{c.servicesLead}</p>
+    <div class="grid grid-3 cards">
+      {
+        services.map((s) => (
+          <article class="card">
+            <img class="card-icon" src={`/assets/icons/${s.icon}.svg`} alt="" aria-hidden="true" width="40" height="40" />
+            <h3>{c.services[s.key][0]}</h3>
+            <p>{c.services[s.key][1]}</p>
+          </article>
+        ))
+      }
+    </div>
+    <p class="section-cta">
+      <a class="arrow-link" href={localizedPath('services', locale)}>{c.servicesCta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">{c.valuesEyebrow}</span>
+    <h2>{c.valuesTitle}</h2>
+    <div class="grid grid-4 values">
+      {
+        values.map((v) => (
+          <div class="value">
+            <img src={`/assets/icons/${v.icon}.svg`} alt="" aria-hidden="true" width="36" height="36" />
+            <h4>{c.values[v.key][0]}</h4>
+            <p class="muted">{c.values[v.key][1]}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section vitao">
+  <div class="container vitao-inner">
+    <div>
+      <span class="eyebrow">{c.vitaoEyebrow}</span>
+      <h2>{c.vitaoTitle}</h2>
+      <p class="lead">{c.vitaoText}</p>
+      <div class="vitao-cta">
+        <a class="btn btn-primary" href="https://vitao.io" target="_blank" rel="noopener">{c.vitaoPrimary}</a>
+        <a class="arrow-link" href={localizedPath('vitao', locale)}>{c.vitaoSecondary}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<CTA
+  heading={c.ctaHeading}
+  text={c.ctaText}
+  buttonLabel={c.ctaButton}
+  buttonHref={localizedPath('contact', locale)}
+/>
+
+<style>
+  .cards {
+    margin-top: var(--space-4);
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-1);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2);
+  }
+  .card-icon {
+    margin-bottom: var(--space-2);
+  }
+  .card h3 {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-1);
+  }
+  .card p {
+    color: var(--ink-500);
+    font-size: var(--step--1);
+  }
+  .section-cta {
+    margin-top: var(--space-4);
+  }
+  .values {
+    margin-top: var(--space-4);
+  }
+  .value img {
+    margin-bottom: var(--space-2);
+  }
+  .value h4 {
+    margin-bottom: var(--space-1);
+  }
+  .value p {
+    font-size: var(--step--1);
+  }
+  .vitao {
+    background: linear-gradient(120deg, var(--brand-050), var(--accent-100));
+  }
+  .vitao-inner {
+    max-width: 60ch;
+  }
+  .vitao h2 {
+    margin-bottom: var(--space-2);
+  }
+  .vitao-cta {
+    margin-top: var(--space-4);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+interface Props {
+  heading: string;
+  text: string;
+  buttonLabel: string;
+  buttonHref: string;
+}
+const { heading, text, buttonLabel, buttonHref } = Astro.props;
+---
+
+<section class="section cta surface-dark">
+  <div class="container cta-inner">
+    <div>
+      <h2>{heading}</h2>
+      <p class="lead">{text}</p>
+    </div>
+    <a class="btn btn-primary" href={buttonHref}>{buttonLabel}</a>
+  </div>
+</section>
+
+<style>
+  .cta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  .cta h2 {
+    margin-bottom: var(--space-2);
+  }
+  .cta .btn {
+    flex-shrink: 0;
+  }
+</style>
