@@ -60,7 +60,5 @@ Register **two** properties — `https://type10.com` and `https://type10.de` —
 
 ## Pre-launch checklist
 
-- [ ] **Legal review** of the Privacy/Datenschutz template (`src/components/views/PrivacyPage.astro`) and Imprint by counsel. They are `noindex` until signed off.
-- [ ] **AutoScout24 + RTL/TVNow** case studies — confirm real scope/metrics, or drop AutoScout24 to a logo-only mention (`src/content/caseStudies/{en,de}/autoscout24.md`).
 - [ ] Confirm the **GA4 property** `G-VGW1F01QDH` is the right stream (or add a per-domain data stream); analytics only fires after consent.
 - [ ] Verify legacy **301s** resolve (see middleware map) and run **Lighthouse** on home + a service + a case study + an article, both locales.
