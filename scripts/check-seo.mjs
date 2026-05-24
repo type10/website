@@ -20,7 +20,7 @@ let errors = 0;
 for (const f of files) {
   const rel = relative(ROOT, f);
   const html = readFileSync(f, 'utf8');
-  const isDe = rel === 'de/index.html' || rel.startsWith('de/');
+  const isDe = rel === 'de.html' || rel === 'de/index.html' || rel.startsWith('de/');
   const expected = isDe ? 'type10.de' : 'type10.com';
 
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/);

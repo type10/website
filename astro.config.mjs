@@ -9,7 +9,8 @@ import mdx from '@astrojs/mdx';
 // from src/i18n/routes.ts (publicUrl/alternatesFor) against https://type10.de.
 export default defineConfig({
   site: 'https://type10.com',
-  trailingSlash: 'always',
+  trailingSlash: 'never',
+  build: { format: 'file' },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'de'],

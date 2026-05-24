@@ -40,7 +40,7 @@ export const routes = {
 
 export type RouteKey = keyof typeof routes;
 
-const wrap = (seg: string) => (seg === '' ? '/' : `/${seg}/`);
+const wrap = (seg: string) => (seg === '' ? '/' : `/${seg}`);
 
 const segment = (key: RouteKey, locale: Locale, sub?: string) => {
   const base = routes[key][locale];

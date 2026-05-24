@@ -23,7 +23,7 @@ const isAssetPath = (path: string): boolean =>
 
 const addDePrefix = (url: URL): URL => {
   const target = new URL(url);
-  target.pathname = DE_PREFIX + (url.pathname === '/' ? '/' : url.pathname);
+  target.pathname = url.pathname === '/' ? DE_PREFIX : DE_PREFIX + url.pathname;
   return target;
 };
 
@@ -51,10 +51,10 @@ function legacyTarget(host: string, path: string): string | null {
       blockchain: 'blockchain-web3',
     };
     const portfolio = path.match(/^\/portfolio\/([^/]+)\/?$/);
-    if (portfolio) return work[portfolio[1]] ? `/work/${work[portfolio[1]]}/` : '/work/';
-    if (path === '/portfolio' || path === '/portfolio/') return '/work/';
+    if (portfolio) return work[portfolio[1]] ? `/work/${work[portfolio[1]]}` : '/work';
+    if (path === '/portfolio' || path === '/portfolio/') return '/work';
     const svc = path.match(/^\/services\/([^/]+)\/?$/);
-    if (svc && services[svc[1]]) return `/services/${services[svc[1]]}/`;
+    if (svc && services[svc[1]]) return `/services/${services[svc[1]]}`;
     return null;
   }
   if (host.endsWith('type10.de')) {
@@ -67,9 +67,9 @@ function legacyTarget(host: string, path: string): string | null {
       'type10-doodlestory': 'doodlestory',
     };
     const portfolio = path.match(/^\/portfolio\/([^/]+)\/?$/);
-    if (portfolio) return work[portfolio[1]] ? `/referenzen/${work[portfolio[1]]}/` : '/referenzen/';
-    if (path === '/portfolio' || path === '/portfolio/') return '/referenzen/';
-    if (path === '/blog' || path.startsWith('/blog/')) return '/insights/';
+    if (portfolio) return work[portfolio[1]] ? `/referenzen/${work[portfolio[1]]}` : '/referenzen';
+    if (path === '/portfolio' || path === '/portfolio/') return '/referenzen';
+    if (path === '/blog' || path.startsWith('/blog/')) return '/insights';
     return null;
   }
   return null;
@@ -90,6 +90,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return Response.redirect(target.toString(), 301);
   }
 
+  if (path !== '/' && path.endsWith('/') && !isAssetPath(path)) {
+    const target = new URL(url);
+    target.pathname = path.replace(/\/+$/, '');
+    return Response.redirect(target.toString(), 301);
+  }
+
   // ---- type10.de : German served at the apex ----
   if (host.endsWith('type10.de')) {
     // Root files that exist per-locale: serve the German variant on type10.de.
@@ -105,7 +111,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     if (!isAssetPath(path)) {
       const res = await env.ASSETS.fetch(new Request(addDePrefix(url), request));
       if (res.status === 404) {
-        const de404 = await env.ASSETS.fetch(new URL('/de/404/index.html', url));
+        const de404 = await env.ASSETS.fetch(new URL('/de/404.html', url));
         return new Response(de404.body, { status: 404, headers: de404.headers });
       }
       return res;
