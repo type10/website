@@ -11,11 +11,12 @@ interface Props {
 const { locale } = Astro.props;
 
 const services = [
-  { icon: 'icon_communication', key: 'cloud' },
-  { icon: 'icon_generalist', key: 'backend' },
-  { icon: 'icon_knowledge', key: 'frontend' },
-  { icon: 'icon_care', key: 'web3' },
-  { icon: 'icon_generalist', key: 'product' },
+  { icon: 'icon_cloud', key: 'cloud', slug: 'cloud-devops' },
+  { icon: 'icon_backend', key: 'backend', slug: 'backend-microservices' },
+  { icon: 'icon_frontend', key: 'frontend', slug: 'frontend-web' },
+  { icon: 'icon_web3', key: 'web3', slug: 'blockchain-web3' },
+  { icon: 'icon_product', key: 'product', slug: 'product-engineering' },
+  { icon: 'icon_ai', key: 'ai', slug: 'applied-ai' },
 ] as const;
 
 const values = [
@@ -37,7 +38,7 @@ const copy = {
     servicesEyebrow: 'What we do',
     servicesTitle: 'Engineering across the full stack',
     servicesLead:
-      'Five focused practices, one senior team. We embed with your engineers or run delivery end-to-end.',
+      'Six focused practices, one senior team. We embed with your engineers or run delivery end-to-end.',
     servicesCta: 'Explore all services',
     services: {
       cloud: ['Cloud & DevOps', 'Cloud architecture, Kubernetes, CI/CD and observability that keep production calm.'],
@@ -45,6 +46,7 @@ const copy = {
       frontend: ['Web Frontends', 'Fast, accessible React frontends and design systems your team can own.'],
       web3: ['Blockchain & Web3', 'Smart contracts, dApps and integrations — pragmatic, audited, production-grade.'],
       product: ['Product Engineering', 'From MVP to scale: we build and run SaaS products, including our own.'],
+      ai: ['Applied AI', 'LLM assistants and autonomous agents that do real work inside your product — not bolted-on chatbots.'],
     },
     valuesEyebrow: 'How we work',
     valuesTitle: 'Senior by default, generalist by principle',
@@ -77,7 +79,7 @@ const copy = {
     servicesEyebrow: 'Was wir tun',
     servicesTitle: 'Engineering über den gesamten Stack',
     servicesLead:
-      'Fünf fokussierte Disziplinen, ein erfahrenes Team. Wir verstärken Ihre Entwickler:innen oder übernehmen die Umsetzung komplett.',
+      'Sechs fokussierte Disziplinen, ein erfahrenes Team. Wir verstärken Ihre Entwickler:innen oder übernehmen die Umsetzung komplett.',
     servicesCta: 'Alle Leistungen ansehen',
     services: {
       cloud: ['Cloud & DevOps', 'Cloud-Architektur, Kubernetes, CI/CD und Observability, die den Betrieb ruhig halten.'],
@@ -85,6 +87,7 @@ const copy = {
       frontend: ['Web-Frontends', 'Schnelle, barrierefreie React-Frontends und Design-Systeme, die Ihr Team selbst pflegt.'],
       web3: ['Blockchain & Web3', 'Smart Contracts, dApps und Integrationen — pragmatisch, auditiert, produktionsreif.'],
       product: ['Produktentwicklung', 'Vom MVP bis zur Skalierung: Wir bauen und betreiben SaaS-Produkte, auch eigene.'],
+      ai: ['Angewandte KI', 'KI-Assistenten und autonome Agenten, die echte Arbeit im Produkt leisten — keine angeschraubten Chatbots.'],
     },
     valuesEyebrow: 'Wie wir arbeiten',
     valuesTitle: 'Erfahren als Standard, Generalist aus Prinzip',
@@ -92,7 +95,7 @@ const copy = {
       generalist: ['Generalist sein', 'Wir stellen Entwickler:innen ein, die sich über den ganzen Stack bewegen — so sitzt immer die richtige Person am Problem.'],
       knowledge: ['Wissen teilen', 'Keine Single Points of Failure. Wir dokumentieren, pairen und übergeben, damit Ihr Team unabhängig bleibt.'],
       care: ['Verantwortung übernehmen', 'Wir verantworten Qualität von der Architektur bis zum Pager um 3 Uhr nachts.'],
-      communication: ['Die Kommunikationskette besitzen', 'Direkte Kommunikation mit erfahrenen Leuten — kein Stille-Post über Account-Manager.'],
+      communication: ['Die Kommunikationskette beherrschen', 'Direkte Kommunikation mit erfahrenen Leuten — kein Stille-Post über Account-Manager.'],
     },
     vitaoEyebrow: 'Unser Produkt',
     vitaoTitle: 'Vitao — der ehrliche KI-Lebenslauf-Builder',
@@ -129,11 +132,11 @@ const c = copy[locale];
     <div class="grid grid-3 cards">
       {
         services.map((s) => (
-          <article class="card">
+          <a class="card" href={localizedPath('services', locale, s.slug)}>
             <img class="card-icon" src={`/assets/icons/${s.icon}.svg`} alt="" aria-hidden="true" width="40" height="40" />
             <h3>{c.services[s.key][0]}</h3>
             <p>{c.services[s.key][1]}</p>
-          </article>
+          </a>
         ))
       }
     </div>
@@ -196,16 +199,21 @@ const c = copy[locale];
     margin-top: var(--space-4);
   }
   .card {
+    display: block;
+    color: var(--ink);
+    text-decoration: none;
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: var(--space-4);
     box-shadow: var(--shadow-1);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-2);
+    border-color: var(--brand-100);
+    text-decoration: none;
   }
   .card-icon {
     margin-bottom: var(--space-2);

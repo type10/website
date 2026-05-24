@@ -3,7 +3,7 @@ locale: de
 slug: blockchain-web3
 title: Blockchain & Web3
 summary: Smart Contracts, dApps und Integrationen — pragmatisch, auditiert, produktionsreif.
-icon: icon_care
+icon: icon_web3
 order: 4
 relatedCaseStudies: []
 seo:

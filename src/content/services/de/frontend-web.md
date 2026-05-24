@@ -3,7 +3,7 @@ locale: de
 slug: frontend-web
 title: Web-Frontends
 summary: Schnelle, barrierefreie React-Frontends und Design-Systeme, die Ihr Team selbst pflegt.
-icon: icon_knowledge
+icon: icon_frontend
 order: 3
 relatedCaseStudies: [lusini, check24-pkv, rtl-tvnow]
 seo:

@@ -3,7 +3,7 @@ locale: en
 slug: product-engineering
 title: Product Engineering
 summary: From MVP to scale — we build and run SaaS products, including our own.
-icon: icon_generalist
+icon: icon_product
 order: 5
 relatedCaseStudies: [doodlestory, vitao]
 seo:

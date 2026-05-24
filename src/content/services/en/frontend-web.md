@@ -3,7 +3,7 @@ locale: en
 slug: frontend-web
 title: Web Frontends
 summary: Fast, accessible React frontends and design systems your team can own.
-icon: icon_knowledge
+icon: icon_frontend
 order: 3
 relatedCaseStudies: [lusini, check24-pkv, rtl-tvnow]
 seo:

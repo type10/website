@@ -3,7 +3,7 @@ locale: de
 slug: cloud-devops
 title: Cloud & DevOps
 summary: Cloud-Architektur, Kubernetes, CI/CD und Observability, die den Betrieb ruhig halten.
-icon: icon_communication
+icon: icon_cloud
 order: 1
 relatedCaseStudies: [maxdome]
 seo:

@@ -3,7 +3,7 @@ locale: en
 slug: backend-microservices
 title: Backend & Microservices
 summary: Distributed service backends and data layers built for throughput and reliability.
-icon: icon_generalist
+icon: icon_backend
 order: 2
 relatedCaseStudies: [maxdome, organizeme, lusini]
 seo:

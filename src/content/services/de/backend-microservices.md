@@ -3,7 +3,7 @@ locale: de
 slug: backend-microservices
 title: Backend & Microservices
 summary: Verteilte Service-Backends und Datenschichten für Durchsatz und Zuverlässigkeit.
-icon: icon_generalist
+icon: icon_backend
 order: 2
 relatedCaseStudies: [maxdome, organizeme, lusini]
 seo:

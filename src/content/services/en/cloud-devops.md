@@ -3,7 +3,7 @@ locale: en
 slug: cloud-devops
 title: Cloud & DevOps
 summary: Cloud architecture, Kubernetes, CI/CD and observability that keep production calm.
-icon: icon_communication
+icon: icon_cloud
 order: 1
 relatedCaseStudies: [maxdome]
 seo:

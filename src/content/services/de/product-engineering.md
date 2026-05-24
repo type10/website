@@ -3,7 +3,7 @@ locale: de
 slug: product-engineering
 title: Produktentwicklung
 summary: Vom MVP bis zur Skalierung — wir bauen und betreiben SaaS-Produkte, auch eigene.
-icon: icon_generalist
+icon: icon_product
 order: 5
 relatedCaseStudies: [doodlestory, vitao]
 seo:
