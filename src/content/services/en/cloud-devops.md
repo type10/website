@@ -6,7 +6,6 @@ summary: Cloud architecture, Kubernetes, CI/CD and observability that keep produ
 icon: icon_communication
 order: 1
 relatedCaseStudies: [maxdome]
-relatedTechnologies: [kubernetes-aws]
 seo:
   description: Cloud architecture, Kubernetes and CI/CD consulting from Munich. We plan migrations, automate delivery and make production observable — and calm.
 ---

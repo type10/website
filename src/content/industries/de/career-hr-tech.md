@@ -20,4 +20,4 @@ Karriere- und HR-Tech kennen wir von innen, weil wir selbst ein Produkt darin be
 
 ## Sehen Sie selbst
 
-Lesen Sie die [Vitao Case Study](/referenzen/vitao/) oder [entdecken Sie Vitao direkt](https://vitao.io). Wenn Sie in Karriere oder HR bauen, [sprechen wir](/kontakt/).
+Lesen Sie die [Vitao Case Study](/referenzen/vitao/) oder <a href="https://vitao.io" target="_blank" rel="noopener">entdecken Sie Vitao direkt</a>. Wenn Sie in Karriere oder HR bauen, [sprechen wir](/kontakt/).

@@ -38,7 +38,6 @@ const services = defineCollection({
     order: z.number().default(0),
     featured: z.boolean().default(true),
     relatedCaseStudies: z.array(z.string()).default([]),
-    relatedTechnologies: z.array(z.string()).default([]),
     seo,
   }),
 });
@@ -73,21 +72,6 @@ const industries = defineCollection({
     heroImage: z.string().optional(),
     caseStudies: z.array(z.string()).default([]), // case-study slugs
     services: z.array(z.string()).default([]), // service slugs
-    order: z.number().default(0),
-    seo,
-  }),
-});
-
-const technologies = defineCollection({
-  loader: i18nGlob('technologies'),
-  schema: z.object({
-    locale,
-    slug: z.string(),
-    title: z.string(),
-    summary: z.string(),
-    logo: z.string().optional(),
-    relatedServices: z.array(z.string()).default([]),
-    relatedCaseStudies: z.array(z.string()).default([]),
     order: z.number().default(0),
     seo,
   }),
@@ -135,4 +119,4 @@ const insights = defineCollection({
   }),
 });
 
-export const collections = { services, caseStudies, industries, technologies, team, insights };
+export const collections = { services, caseStudies, industries, team, insights };

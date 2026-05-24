@@ -6,7 +6,6 @@ summary: Cloud-Architektur, Kubernetes, CI/CD und Observability, die den Betrieb
 icon: icon_communication
 order: 1
 relatedCaseStudies: [maxdome]
-relatedTechnologies: [kubernetes-aws]
 seo:
   description: Cloud-Architektur-, Kubernetes- und CI/CD-Beratung aus München. Wir planen Migrationen, automatisieren das Deployment und machen den Betrieb sichtbar — und ruhig.
 ---

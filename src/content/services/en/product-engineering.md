@@ -6,7 +6,6 @@ summary: From MVP to scale — we build and run SaaS products, including our own
 icon: icon_generalist
 order: 5
 relatedCaseStudies: [doodlestory, vitao]
-relatedTechnologies: [nodejs, react]
 seo:
   description: Product engineering and SaaS development. We take ideas from MVP to scale — auth, billing, AI features and operations — and we run our own products the same way.
 ---
@@ -22,4 +21,4 @@ Some clients don't need a team to extend — they need a product built. We take 
 
 ## We build our own products, too
 
-[Vitao](https://vitao.io) is our ATS-optimized AI résumé builder — proof that we ship and operate real products, not just slides. See how we built it in the [Vitao case study](/work/vitao/).
+<a href="https://vitao.io" target="_blank" rel="noopener">Vitao</a> is our ATS-optimized AI résumé builder — proof that we ship and operate real products, not just slides. See how we built it in the [Vitao case study](/work/vitao/).

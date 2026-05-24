@@ -14,7 +14,6 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
     'services',
     'industries',
     'work',
-    'technologies',
     'insights',
     'vitao',
     'about',
@@ -24,12 +23,11 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
   ];
   const entries: SitemapEntry[] = staticKeys.map((key) => ({ key }));
 
-  const collections: { coll: 'services' | 'caseStudies' | 'industries' | 'technologies' | 'insights'; key: RouteKey }[] =
+  const collections: { coll: 'services' | 'caseStudies' | 'industries' | 'insights'; key: RouteKey }[] =
     [
       { coll: 'services', key: 'services' },
       { coll: 'caseStudies', key: 'work' },
       { coll: 'industries', key: 'industries' },
-      { coll: 'technologies', key: 'technologies' },
       { coll: 'insights', key: 'insights' },
     ];
 

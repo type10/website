@@ -23,6 +23,15 @@ const copy = {
 ---
 
 <aside class="vitao-callout">
+  <img
+    class="vitao-callout-shot"
+    src="/assets/work/2026-vitao-1.png"
+    alt=""
+    width="1600"
+    height="900"
+    loading="lazy"
+    decoding="async"
+  />
   <span class="eyebrow">{copy.eyebrow}</span>
   <h3>{copy.title}</h3>
   <p>{copy.text}</p>
@@ -36,6 +45,14 @@ const copy = {
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: var(--space-4);
+  }
+  .vitao-callout-shot {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    margin-bottom: var(--space-3);
+    display: block;
   }
   .vitao-callout h3 {
     font-size: var(--step-1);

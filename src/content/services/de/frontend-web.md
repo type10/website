@@ -6,7 +6,6 @@ summary: Schnelle, barrierefreie React-Frontends und Design-Systeme, die Ihr Tea
 icon: icon_knowledge
 order: 3
 relatedCaseStudies: [lusini, check24-pkv, rtl-tvnow]
-relatedTechnologies: [react]
 seo:
   description: React-Frontend-Entwicklung und Design-Systeme. Wir bauen schnelle, barrierefreie Web-Frontends — von Vergleichsformularen bis zu OTT-Streaming-Apps — die Ihr Team selbst pflegt.
 ---

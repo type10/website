@@ -29,4 +29,4 @@ Ein ATS liest Ihre Datei ein, versucht sie in bekannte Abschnitte zu zerlegen (K
 
 Nutzen Sie ein einspaltiges Layout, übliche Abschnittsüberschriften, echten Text (nie Bilder) und die tatsächlichen Begriffe aus der Stellenanzeige, soweit sie auf Sie zutreffen. Und weil am Ende ein Mensch entscheidet: machen Sie es lesbar und konkret.
 
-Genau dieses Problem haben wir mit [Vitao](https://vitao.io) gelöst: einem ATS-optimierten Lebenslauf-Builder, der die Struktur maschinenfreundlich hält, während der Text menschlich bleibt.
+Genau dieses Problem haben wir mit <a href="https://vitao.io" target="_blank" rel="noopener">Vitao</a> gelöst: einem ATS-optimierten Lebenslauf-Builder, der die Struktur maschinenfreundlich hält, während der Text menschlich bleibt.

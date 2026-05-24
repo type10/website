@@ -28,4 +28,4 @@ Das Backend ist eine **Node.js-REST-API**, die ihre Daten in **Elasticsearch** s
 
 ## Warum es wichtig war
 
-Eigene Produkte zu bauen und auszuliefern hält uns ehrlich. DoodleStory ist Teil einer langen Gewohnheit, auf das eigene Engineering zu setzen — dieselbe Gewohnheit, die [Vitao](https://vitao.io) hervorgebracht hat.
+Eigene Produkte zu bauen und auszuliefern hält uns ehrlich. DoodleStory ist Teil einer langen Gewohnheit, auf das eigene Engineering zu setzen — dieselbe Gewohnheit, die <a href="https://vitao.io" target="_blank" rel="noopener">Vitao</a> hervorgebracht hat.

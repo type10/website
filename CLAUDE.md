@@ -45,12 +45,12 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 ## Content
 
 - Collections in `src/content.config.ts`: `services`, `caseStudies`, `industries`,
-  `technologies`, `team`, `insights`. Files live at `src/content/<coll>/{en,de}/<slug>.md`.
+  `team`, `insights`. Files live at `src/content/<coll>/{en,de}/<slug>.md`.
 - Every entry has `locale`, `slug` (the cross-locale join key, same in both languages), and an
   optional `seo` object. The glob loader uses a custom `generateId` that keeps the locale folder —
   **don't remove it**, or `en/<slug>` and `de/<slug>` collide and one locale silently disappears.
 - **Pages are thin wrappers.** EN under `src/pages/...`; DE under `src/pages/de/...` with localized
-  folder names (`leistungen`, `referenzen`, `branchen`, `technologien`, `produkte`, `ueber-uns`,
+  folder names (`leistungen`, `referenzen`, `branchen`, `produkte`, `ueber-uns`,
   `kontakt`, `impressum`, `datenschutz`, `karriere`). Both import the same view component from
   `src/components/views/` and pass `locale`. `[slug].astro` filters the collection by locale.
 - `Base.astro` wraps `Seo` + `Header` + `Footer` + `ConsentBanner`. Pass it `locale`, `routeKey`,
@@ -86,4 +86,4 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 See `DEPLOYMENT.md` for the full checklist + Cloudflare Pages/DNS setup. Headlines:
 - Privacy/Datenschutz + Imprint are a template — **needs legal review** (currently `noindex`).
 - AutoScout24 (and RTL+/TVNow) case studies need real scope/metrics, or drop AutoScout24 to logo-only.
-- Confirm the GA4 stream; add a real Vitao screenshot; register two Search Console properties.
+- Confirm the GA4 stream; replace the Vitao placeholder images (`public/assets/work/2024-vitao-*.svg`) with real screenshots; register two Search Console properties.

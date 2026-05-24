@@ -6,7 +6,6 @@ summary: Smart contracts, dApps and integrations — pragmatic, audited, product
 icon: icon_care
 order: 4
 relatedCaseStudies: []
-relatedTechnologies: [web3-solidity]
 seo:
   description: Smart contract and dApp development. We bring real engineering discipline to Web3 — EVM/Solidity, ethers.js, Chainlink and The Graph — tested and production-grade.
 ---

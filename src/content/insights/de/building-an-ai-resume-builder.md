@@ -26,4 +26,4 @@ Weil Lebensläufe [zuerst von Maschinen geparst werden](/insights/how-ats-parses
 
 Vitao ist ein Einmalkauf, kein Abo. Das ist teils Prinzip, teils Produkt: Es verändert, was Nutzer:innen erwarten und wie wir Vertrauen verdienen. Es erzwingt auch Disziplin — das Produkt muss sofort Wert liefern, nicht in eine monatliche Tropf-Logik einsperren.
 
-Lesen Sie die ganze [Vitao Case Study](/referenzen/vitao/) oder [probieren Sie Vitao](https://vitao.io).
+Lesen Sie die ganze [Vitao Case Study](/referenzen/vitao/) oder <a href="https://vitao.io" target="_blank" rel="noopener">probieren Sie Vitao</a>.

@@ -6,6 +6,7 @@ interface Props {
   buttonHref: string;
 }
 const { heading, text, buttonLabel, buttonHref } = Astro.props;
+const isExternal = /^https?:\/\//.test(buttonHref);
 ---
 
 <section class="section cta surface-dark">
@@ -14,7 +15,13 @@ const { heading, text, buttonLabel, buttonHref } = Astro.props;
       <h2>{heading}</h2>
       <p class="lead">{text}</p>
     </div>
-    <a class="btn btn-primary" href={buttonHref}>{buttonLabel}</a>
+    <a
+      class="btn btn-primary"
+      href={buttonHref}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener' : undefined}
+      >{buttonLabel}</a
+    >
   </div>
 </section>
 

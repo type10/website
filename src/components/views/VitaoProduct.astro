@@ -83,6 +83,15 @@ const copy = {
     <p style="margin-top: var(--space-3)">
       <a class="btn btn-primary" href="https://vitao.io" target="_blank" rel="noopener">{copy.primaryCta}</a>
     </p>
+    <img
+      class="vitao-shot"
+      src="/assets/work/2026-vitao-1.png"
+      alt={copy.title}
+      width="1600"
+      height="900"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 </section>
 
@@ -121,6 +130,14 @@ const copy = {
 />
 
 <style>
+  .vitao-shot {
+    margin-top: var(--space-5);
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-2);
+  }
   .feature-grid {
     margin-top: var(--space-4);
   }

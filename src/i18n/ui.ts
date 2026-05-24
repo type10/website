@@ -8,7 +8,6 @@ export const ui = {
     'nav.services': 'Services',
     'nav.industries': 'Industries',
     'nav.work': 'Work',
-    'nav.technologies': 'Technologies',
     'nav.insights': 'Insights',
     'nav.about': 'About',
     'nav.team': 'Team',
@@ -37,7 +36,6 @@ export const ui = {
     'nav.services': 'Leistungen',
     'nav.industries': 'Branchen',
     'nav.work': 'Referenzen',
-    'nav.technologies': 'Technologien',
     'nav.insights': 'Insights',
     'nav.about': 'Über uns',
     'nav.team': 'Team',
@@ -76,7 +74,6 @@ export const navItems: { route: RouteKey; key: UIKey }[] = [
   { route: 'services', key: 'nav.services' },
   { route: 'industries', key: 'nav.industries' },
   { route: 'work', key: 'nav.work' },
-  { route: 'technologies', key: 'nav.technologies' },
   { route: 'insights', key: 'nav.insights' },
   { route: 'about', key: 'nav.about' },
 ];

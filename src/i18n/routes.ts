@@ -28,7 +28,6 @@ export const routes = {
   services: { en: 'services', de: 'leistungen' },
   industries: { en: 'industries', de: 'branchen' },
   work: { en: 'work', de: 'referenzen' },
-  technologies: { en: 'technologies', de: 'technologien' },
   insights: { en: 'insights', de: 'insights' },
   vitao: { en: 'products/vitao', de: 'produkte/vitao' },
   about: { en: 'about', de: 'ueber-uns' },

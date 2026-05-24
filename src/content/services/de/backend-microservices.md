@@ -6,7 +6,6 @@ summary: Verteilte Service-Backends und Datenschichten für Durchsatz und Zuverl
 icon: icon_generalist
 order: 2
 relatedCaseStudies: [maxdome, organizeme, lusini]
-relatedTechnologies: [nodejs]
 seo:
   description: Microservices- und Node.js-Backend-Entwicklung. Wir konzipieren Service-Backends, REST-/GraphQL-APIs und Datenschichten für Durchsatz, Zuverlässigkeit und klare Verantwortung.
 ---

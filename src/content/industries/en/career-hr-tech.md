@@ -20,4 +20,4 @@ Career and HR tech is a space we know from the inside, because we build and oper
 
 ## See it for yourself
 
-Read the [Vitao case study](/work/vitao/), or [explore Vitao directly](https://vitao.io). If you're building in careers or HR, [let's talk](/contact/).
+Read the [Vitao case study](/work/vitao/), or <a href="https://vitao.io" target="_blank" rel="noopener">explore Vitao directly</a>. If you're building in careers or HR, [let's talk](/contact/).

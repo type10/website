@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Vitao — placeholder preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f4fc"/>
+      <stop offset="1" stop-color="#e4f5f8"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7341b4"/>
+      <stop offset="1" stop-color="#63c3d1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+
+  <!-- app window -->
+  <rect x="140" y="110" width="920" height="530" rx="18" fill="#ffffff" stroke="#e7e8ee" stroke-width="2"/>
+  <!-- title bar -->
+  <circle cx="178" cy="146" r="7" fill="#ef6b63"/>
+  <circle cx="206" cy="146" r="7" fill="#f3c34f"/>
+  <circle cx="234" cy="146" r="7" fill="#5fcf80"/>
+  <rect x="300" y="132" width="360" height="28" rx="14" fill="#f0f1f5"/>
+  <text x="480" y="151" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" fill="#6b7280">vitao.io</text>
+  <line x1="140" y1="178" x2="1060" y2="178" stroke="#eef0f4" stroke-width="2"/>
+
+  <!-- sidebar skeleton -->
+  <rect x="172" y="210" width="184" height="398" rx="12" fill="#f5f3fb"/>
+  <rect x="196" y="236" width="44" height="44" rx="10" fill="url(#brand)"/>
+  <rect x="196" y="312" width="136" height="12" rx="6" fill="#e6e2f1"/>
+  <rect x="196" y="344" width="110" height="12" rx="6" fill="#e6e2f1"/>
+  <rect x="196" y="376" width="128" height="12" rx="6" fill="#e6e2f1"/>
+  <rect x="196" y="408" width="96" height="12" rx="6" fill="#e6e2f1"/>
+
+  <!-- main content -->
+  <text x="392" y="252" font-family="Sora, Inter, sans-serif" font-size="46" font-weight="700" fill="#7341b4">Vitao</text>
+  <text x="394" y="290" font-family="Inter, sans-serif" font-size="20" fill="#6b7280">Résumé editor</text>
+  <rect x="392" y="330" width="600" height="14" rx="7" fill="#edeef3"/>
+  <rect x="392" y="362" width="540" height="14" rx="7" fill="#edeef3"/>
+  <rect x="392" y="394" width="572" height="14" rx="7" fill="#edeef3"/>
+  <rect x="392" y="446" width="190" height="120" rx="12" fill="#f3f1f9"/>
+  <rect x="600" y="446" width="190" height="120" rx="12" fill="#f3f1f9"/>
+  <rect x="808" y="446" width="184" height="120" rx="12" fill="#f3f1f9"/>
+
+  <!-- placeholder badge -->
+  <rect x="844" y="586" width="196" height="34" rx="17" fill="#ffffff" stroke="url(#brand)" stroke-width="2"/>
+  <text x="942" y="608" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" letter-spacing="0.08em" fill="#7341b4">PLACEHOLDER</text>
+</svg>

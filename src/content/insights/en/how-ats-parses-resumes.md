@@ -29,4 +29,4 @@ An ATS ingests your file, tries to split it into known sections (contact, experi
 
 Use a single-column layout, standard section headings, real text (never images), and the actual words from the job description where they're true of you. Then — because a human still makes the decision — make it readable and specific.
 
-This is exactly the problem we built [Vitao](https://vitao.io) to solve: an ATS-optimized résumé builder that keeps the structure machine-friendly while the writing stays human.
+This is exactly the problem we built <a href="https://vitao.io" target="_blank" rel="noopener">Vitao</a> to solve: an ATS-optimized résumé builder that keeps the structure machine-friendly while the writing stays human.

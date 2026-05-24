@@ -61,6 +61,7 @@ const copy = {
       "We design and operate Vitao: an ATS-optimized résumé builder with AI assistance and a fair one-time price. It's how we prove our product-engineering practice on our own dime.",
     vitaoPrimary: 'Visit vitao.io',
     vitaoSecondary: 'Read the case study',
+    vitaoImageAlt: 'Vitao — the AI résumé builder',
     ctaHeading: "Let's build something that lasts",
     ctaText:
       "Tell us about your platform, your roadmap or the team you're scaling. We'll reply within a working day.",
@@ -70,10 +71,10 @@ const copy = {
     heroEyebrow: 'Software- & Cloud-Beratung · München',
     heroTitle: 'Erfahrenes Engineering für Plattformen, die <span class="hl">skalieren</span>',
     heroLead:
-      'TYPE10 Media ist eine Beratung aus erfahrenen Entwickler:innen. Seit über 15 Jahren konzipieren, bauen und skalieren wir Streaming-Plattformen, Marktplätze und Vergleichsportale — für Kunden wie maxdome, AutoScout24 und CHECK24 — und entwickeln eigene Produkte.',
+      'TYPE10 Media ist eine Senior Software Beratungsfirma. Seit über 15 Jahren konzipieren, bauen und skalieren wir Streaming-Plattformen, Marktplätze und Vergleichsportale — für Kunden wie maxdome, AutoScout24 und CHECK24 — und entwickeln eigene Produkte.',
     heroPrimary: 'Projekt starten',
     heroSecondary: 'Referenzen ansehen',
-    logowall: 'Vertrauen von Teams, die im großen Maßstab liefern',
+    logowall: 'Bewährt bei Teams, die im großen Stil liefern',
     servicesEyebrow: 'Was wir tun',
     servicesTitle: 'Engineering über den gesamten Stack',
     servicesLead:
@@ -100,6 +101,7 @@ const copy = {
       'Wir entwickeln und betreiben Vitao: einen ATS-optimierten Lebenslauf-Builder mit KI-Unterstützung und fairem Einmalpreis. So beweisen wir unsere Produktentwicklung am eigenen Produkt.',
     vitaoPrimary: 'vitao.io besuchen',
     vitaoSecondary: 'Case Study lesen',
+    vitaoImageAlt: 'Vitao — der KI-Lebenslauf-Builder',
     ctaHeading: 'Lassen Sie uns etwas Beständiges bauen',
     ctaText:
       'Erzählen Sie uns von Ihrer Plattform, Ihrer Roadmap oder dem Team, das Sie skalieren. Wir antworten innerhalb eines Werktags.',
@@ -173,6 +175,15 @@ const c = copy[locale];
         <a class="arrow-link" href={localizedPath('vitao', locale)}>{c.vitaoSecondary}</a>
       </div>
     </div>
+    <img
+      class="vitao-shot"
+      src="/assets/work/2026-vitao-1.png"
+      alt={c.vitaoImageAlt}
+      width="1600"
+      height="900"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 </section>
 
@@ -229,7 +240,21 @@ const c = copy[locale];
     background: linear-gradient(120deg, var(--brand-050), var(--accent-100));
   }
   .vitao-inner {
-    max-width: 60ch;
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  @media (min-width: 880px) {
+    .vitao-inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  .vitao-shot {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-2);
   }
   .vitao h2 {
     margin-bottom: var(--space-2);

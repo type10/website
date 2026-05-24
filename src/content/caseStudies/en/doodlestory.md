@@ -28,4 +28,4 @@ The backend is a **Node.js REST API** that stores its data in **Elasticsearch** 
 
 ## Why it mattered
 
-Building and shipping our own product keeps us honest. DoodleStory is part of a long habit of betting on our own engineering — the same habit that produced [Vitao](https://vitao.io).
+Building and shipping our own product keeps us honest. DoodleStory is part of a long habit of betting on our own engineering — the same habit that produced <a href="https://vitao.io" target="_blank" rel="noopener">Vitao</a>.

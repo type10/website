@@ -26,4 +26,4 @@ Because résumés are [parsed by machines first](/insights/how-ats-parses-resume
 
 Vitao is a one-time purchase, not a subscription. That's partly principle and partly product: it changes what users expect and how we earn trust. It also forced discipline — the product has to deliver value immediately, not lock people into a monthly drip.
 
-Read the full [Vitao case study](/work/vitao/), or just [try Vitao](https://vitao.io).
+Read the full [Vitao case study](/work/vitao/), or just <a href="https://vitao.io" target="_blank" rel="noopener">try Vitao</a>.

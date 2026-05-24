@@ -6,7 +6,6 @@ summary: Fast, accessible React frontends and design systems your team can own.
 icon: icon_knowledge
 order: 3
 relatedCaseStudies: [lusini, check24-pkv, rtl-tvnow]
-relatedTechnologies: [react]
 seo:
   description: React frontend development and design systems. We build fast, accessible web frontends — from comparison forms to OTT streaming apps — that your team can own.
 ---

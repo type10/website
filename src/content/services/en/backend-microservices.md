@@ -6,7 +6,6 @@ summary: Distributed service backends and data layers built for throughput and r
 icon: icon_generalist
 order: 2
 relatedCaseStudies: [maxdome, organizeme, lusini]
-relatedTechnologies: [nodejs]
 seo:
   description: Microservices and Node.js backend development. We design service backends, REST/GraphQL APIs and data layers built for throughput, reliability and clear ownership.
 ---
