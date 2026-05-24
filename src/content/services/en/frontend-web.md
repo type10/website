@@ -7,6 +7,7 @@ icon: icon_knowledge
 order: 3
 relatedCaseStudies: [lusini, check24-pkv, rtl-tvnow]
 seo:
+  title: React Frontend & Design Systems — TYPE10 Media
   description: React frontend development and design systems. We build fast, accessible web frontends — from comparison forms to OTT streaming apps — that your team can own.
 ---
 

@@ -7,6 +7,7 @@ icon: icon_care
 order: 4
 relatedCaseStudies: []
 seo:
+  title: Web3- & Smart-Contract-Entwicklung — TYPE10 Media
   description: Smart-Contract- und dApp-Entwicklung. Wir bringen echte Engineering-Disziplin ins Web3 — EVM/Solidity, ethers.js, Chainlink und The Graph — getestet und produktionsreif.
 ---
 

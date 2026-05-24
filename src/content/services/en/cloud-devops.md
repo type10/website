@@ -7,6 +7,7 @@ icon: icon_communication
 order: 1
 relatedCaseStudies: [maxdome]
 seo:
+  title: Kubernetes & Cloud Consulting Munich — TYPE10 Media
   description: Cloud architecture, Kubernetes and CI/CD consulting from Munich. We plan migrations, automate delivery and make production observable — and calm.
 ---
 

@@ -7,6 +7,7 @@ icon: icon_communication
 order: 1
 relatedCaseStudies: [maxdome]
 seo:
+  title: Kubernetes- & Cloud-Beratung München — TYPE10 Media
   description: Cloud-Architektur-, Kubernetes- und CI/CD-Beratung aus München. Wir planen Migrationen, automatisieren das Deployment und machen den Betrieb sichtbar — und ruhig.
 ---
 

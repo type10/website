@@ -1,15 +1,39 @@
 ---
 import { company } from '../../i18n/site';
+import { domains } from '../../i18n/routes';
+import type { Locale } from '../../i18n/routes';
+
+// One enriched ProfessionalService node, @id `#organization`, emitted once per page
+// from Base.astro. Locale-aware: URLs resolve to the correct domain so the .de pages
+// don't advertise .com. Service/WebSite/Vitao schema reference this node via @id.
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const base = domains[locale];
+
+const areaServed =
+  locale === 'de'
+    ? [
+        { '@type': 'City', name: 'München' },
+        { '@type': 'Country', name: 'Deutschland' },
+      ]
+    : [
+        { '@type': 'City', name: 'Munich' },
+        { '@type': 'Country', name: 'Germany' },
+      ];
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  '@id': 'https://type10.com/#organization',
+  '@id': `${base}/#organization`,
   name: company.legalName,
-  url: 'https://type10.com',
-  logo: 'https://type10.com/assets/logo/logo-opengraph.png',
+  url: base,
+  logo: `${base}/assets/logo/logo-opengraph-${locale}.png`,
+  image: `${base}/assets/logo/logo-opengraph-${locale}.png`,
   email: company.email,
   telephone: company.phone,
+  inLanguage: locale,
   founder: { '@type': 'Person', name: company.founder },
   address: {
     '@type': 'PostalAddress',
@@ -18,7 +42,30 @@ const jsonLd = {
     addressLocality: company.address.city,
     addressCountry: company.address.country,
   },
-  sameAs: ['https://twitter.com/type10media', 'https://github.com/type10'],
+  areaServed,
+  knowsAbout: [
+    'Cloud Architecture',
+    'Kubernetes',
+    'DevOps',
+    'CI/CD',
+    'Microservices',
+    'Backend Development',
+    'Node.js',
+    'React',
+    'Web Frontend Development',
+    'Web3',
+    'Smart Contracts',
+    'SaaS Product Engineering',
+    'AI Integration',
+  ],
+  // TODO(user-fact): supply real values, then uncomment — never invent these.
+  // geo: { '@type': 'GeoCoordinates', latitude: <lat>, longitude: <lng> }, // Einseleweg 1, 81377 München
+  // foundingDate: '<YYYY>',
+  sameAs: [
+    'https://twitter.com/type10media',
+    'https://github.com/type10',
+    // TODO(user-fact): add LinkedIn company URL, e.g. 'https://www.linkedin.com/company/type10media'
+  ],
 };
 ---
 

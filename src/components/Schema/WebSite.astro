@@ -1,0 +1,24 @@
+---
+import { domains } from '../../i18n/routes';
+import type { Locale } from '../../i18n/routes';
+
+// Sitewide WebSite node, emitted once per page from Base.astro. Links to the
+// Organization node via publisher.@id. No SearchAction — there is no on-site search.
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const base = domains[locale];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${base}/#website`,
+  url: base,
+  name: 'TYPE10 Media',
+  inLanguage: locale,
+  publisher: { '@id': `${base}/#organization` },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

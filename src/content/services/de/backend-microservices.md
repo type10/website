@@ -7,6 +7,7 @@ icon: icon_generalist
 order: 2
 relatedCaseStudies: [maxdome, organizeme, lusini]
 seo:
+  title: Microservices- & Backend-Entwicklung — TYPE10 Media
   description: Microservices- und Node.js-Backend-Entwicklung. Wir konzipieren Service-Backends, REST-/GraphQL-APIs und Datenschichten für Durchsatz, Zuverlässigkeit und klare Verantwortung.
 ---
 

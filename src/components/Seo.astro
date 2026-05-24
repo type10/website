@@ -19,14 +19,15 @@ const {
   sub,
   title,
   description,
-  ogImage = '/assets/logo/logo-opengraph.png',
+  ogImage,
   noindex = false,
   type = 'website',
 } = Astro.props;
 
 const canonical = publicUrl(routeKey, locale, sub);
 const alt = alternatesFor(routeKey, sub);
-const ogImageUrl = new URL(ogImage, canonical).href;
+// Locale-specific OG share card by default; pages can override via the ogImage prop.
+const ogImageUrl = new URL(ogImage ?? `/assets/logo/logo-opengraph-${locale}.png`, canonical).href;
 ---
 
 <title>{title}</title>

@@ -7,6 +7,7 @@ icon: icon_generalist
 order: 5
 relatedCaseStudies: [doodlestory, vitao]
 seo:
+  title: Produktentwicklung & SaaS-Engineering — TYPE10 Media
   description: Produktentwicklung und SaaS-Engineering. Wir bringen Ideen vom MVP bis zur Skalierung — Auth, Billing, KI-Features und Betrieb — und entwickeln eigene Produkte genauso.
 ---
 

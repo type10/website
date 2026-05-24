@@ -3,6 +3,8 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/sora';
 import '../styles/global.css';
 import Seo from '../components/Seo.astro';
+import Organization from '../components/Schema/Organization.astro';
+import WebSite from '../components/Schema/WebSite.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
@@ -39,6 +41,8 @@ const { locale, routeKey, sub, title, description, ogImage, noindex, type } = As
       noindex={noindex}
       type={type}
     />
+    <Organization locale={locale} />
+    <WebSite locale={locale} />
     <slot name="head" />
   </head>
   <body>

@@ -5,6 +5,7 @@ import Breadcrumbs from '../Breadcrumbs.astro';
 import PageHeader from '../PageHeader.astro';
 import CaseStudyCard from '../CaseStudyCard.astro';
 import CTA from '../CTA.astro';
+import Service from '../Schema/Service.astro';
 import { localizedPath } from '../../i18n/routes';
 import { useTranslations } from '../../i18n/ui';
 import type { Locale } from '../../i18n/routes';
@@ -22,6 +23,8 @@ const related = entry.data.relatedCaseStudies
   .map((slug) => allCases.find((c) => c.data.slug === slug))
   .filter((c): c is CollectionEntry<'caseStudies'> => Boolean(c));
 ---
+
+<Service locale={locale} entry={entry} />
 
 <PageHeader title={entry.data.title} lead={entry.data.summary}>
   <Breadcrumbs

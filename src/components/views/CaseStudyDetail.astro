@@ -25,6 +25,10 @@ const all = await getCollection(
 let related = all.filter((c) => d.industry && c.data.industry === d.industry);
 if (related.length === 0) related = all.filter((c) => c.data.featured);
 related = related.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+
+// Contextual link back to the industry page (strengthens internal linking + topical structure).
+const allIndustries = await getCollection('industries', (e) => e.data.locale === locale);
+const industry = d.industry ? allIndustries.find((i) => i.data.slug === d.industry) : undefined;
 ---
 
 <PageHeader eyebrow={d.client} title={d.title} lead={d.summary}>
@@ -58,6 +62,18 @@ related = related.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
       <dl>
         <dt>{t('cs.client')}</dt>
         <dd>{d.client}</dd>
+        {
+          industry && (
+            <Fragment>
+              <dt>{t('cs.industry')}</dt>
+              <dd>
+                <a href={localizedPath('industries', locale, industry.data.slug)}>
+                  {industry.data.title}
+                </a>
+              </dd>
+            </Fragment>
+          )
+        }
         {
           d.years && (
             <Fragment>

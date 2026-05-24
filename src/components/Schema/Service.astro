@@ -1,0 +1,29 @@
+---
+import { publicUrl, domains } from '../../i18n/routes';
+import type { Locale } from '../../i18n/routes';
+import type { CollectionEntry } from 'astro:content';
+
+// Service node for a service detail page. provider references the Organization
+// node (@id) emitted sitewide from Base.astro. URLs resolve to the correct domain.
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'services'>;
+}
+const { locale, entry } = Astro.props;
+const base = domains[locale];
+const d = entry.data;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: d.title,
+  serviceType: d.title,
+  description: d.seo?.description ?? d.summary,
+  url: publicUrl('services', locale, d.slug),
+  provider: { '@id': `${base}/#organization` },
+  areaServed: { '@type': 'City', name: locale === 'de' ? 'München' : 'Munich' },
+  inLanguage: locale,
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

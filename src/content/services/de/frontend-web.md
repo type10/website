@@ -7,6 +7,7 @@ icon: icon_knowledge
 order: 3
 relatedCaseStudies: [lusini, check24-pkv, rtl-tvnow]
 seo:
+  title: React-Frontends & Design-Systeme — TYPE10 Media
   description: React-Frontend-Entwicklung und Design-Systeme. Wir bauen schnelle, barrierefreie Web-Frontends — von Vergleichsformularen bis zu OTT-Streaming-Apps — die Ihr Team selbst pflegt.
 ---
 

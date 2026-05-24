@@ -1,0 +1,31 @@
+---
+import { domains } from '../../i18n/routes';
+import type { Locale } from '../../i18n/routes';
+
+// SoftwareApplication node for Vitao (vitao.io), the product TYPE10 builds and operates.
+// publisher references the Organization node (@id). offers/aggregateRating are intentionally
+// omitted — only add them with a real price+currency / real ratings (never invent them).
+interface Props {
+  locale: Locale;
+  description: string;
+}
+const { locale, description } = Astro.props;
+const base = domains[locale];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Vitao',
+  url: 'https://vitao.io',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description,
+  inLanguage: locale,
+  publisher: { '@id': `${base}/#organization` },
+  // TODO(user-fact): add when supplied —
+  // offers: { '@type': 'Offer', price: '<amount>', priceCurrency: 'EUR' },
+  // aggregateRating: { '@type': 'AggregateRating', ratingValue: '<x.x>', reviewCount: '<n>' },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

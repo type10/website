@@ -2,7 +2,6 @@
 import Hero from './Hero.astro';
 import LogoWall from './LogoWall.astro';
 import CTA from './CTA.astro';
-import Organization from './Schema/Organization.astro';
 import { localizedPath } from '../i18n/routes';
 import type { Locale } from '../i18n/routes';
 
@@ -69,7 +68,7 @@ const copy = {
   },
   de: {
     heroEyebrow: 'Software- & Cloud-Beratung · München',
-    heroTitle: 'Erfahrenes Engineering für Plattformen, die <span class="hl">skalieren</span>',
+    heroTitle: 'Senior Engineering für Plattformen, die <span class="hl">skalieren</span>',
     heroLead:
       'TYPE10 Media ist eine Senior Software Beratungsfirma. Seit über 15 Jahren konzipieren, bauen und skalieren wir Streaming-Plattformen, Marktplätze und Vergleichsportale — für Kunden wie maxdome, AutoScout24 und CHECK24 — und entwickeln eigene Produkte.',
     heroPrimary: 'Projekt starten',
@@ -111,8 +110,6 @@ const copy = {
 
 const c = copy[locale];
 ---
-
-<Organization />
 
 <Hero
   eyebrow={c.heroEyebrow}

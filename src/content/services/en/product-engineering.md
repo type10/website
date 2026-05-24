@@ -7,6 +7,7 @@ icon: icon_generalist
 order: 5
 relatedCaseStudies: [doodlestory, vitao]
 seo:
+  title: Product Engineering & SaaS Development — TYPE10 Media
   description: Product engineering and SaaS development. We take ideas from MVP to scale — auth, billing, AI features and operations — and we run our own products the same way.
 ---
 

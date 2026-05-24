@@ -2,6 +2,7 @@
 import PageHeader from '../PageHeader.astro';
 import Breadcrumbs from '../Breadcrumbs.astro';
 import CTA from '../CTA.astro';
+import VitaoApp from '../Schema/VitaoApp.astro';
 import { localizedPath } from '../../i18n/routes';
 import { useTranslations } from '../../i18n/ui';
 import type { Locale } from '../../i18n/routes';
@@ -65,6 +66,8 @@ const copy = {
   },
 }[locale];
 ---
+
+<VitaoApp locale={locale} description={copy.intro} />
 
 <PageHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead}>
   <Breadcrumbs
