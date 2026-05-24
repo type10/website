@@ -14,7 +14,12 @@ const { eyebrow, title, lead, primary, secondary } = Astro.props;
 ---
 
 <section class="hero">
-  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-bg" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+    <span class="hero-grid"></span>
+  </div>
   <div class="container hero-inner">
     <span class="eyebrow">{eyebrow}</span>
     <h1 set:html={title} />
@@ -33,21 +38,90 @@ const { eyebrow, title, lead, primary, secondary } = Astro.props;
     background: linear-gradient(180deg, var(--paper) 0%, var(--paper-alt) 100%);
     padding-block: clamp(var(--space-6), 6vw + 2rem, var(--space-8));
   }
-  .hero-glow {
+
+  /* ---- background: drifting brand blobs behind a faint technical grid ---- */
+  .hero-bg {
     position: absolute;
-    inset: -30% 30% auto -10%;
-    height: 60vh;
-    background: radial-gradient(
-        50% 50% at 20% 20%,
-        rgba(115, 65, 180, 0.18),
-        transparent 70%
-      ),
-      radial-gradient(40% 40% at 80% 10%, rgba(99, 195, 209, 0.18), transparent 70%);
-    filter: blur(10px);
+    inset: 0;
+    z-index: 0;
     pointer-events: none;
+    overflow: hidden;
   }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    will-change: transform;
+  }
+  .blob-1 {
+    width: 36rem;
+    height: 36rem;
+    left: -10%;
+    top: -45%;
+    background: radial-gradient(circle, rgba(115, 65, 180, 0.5), transparent 70%);
+    animation: drift-1 22s ease-in-out infinite alternate;
+  }
+  .blob-2 {
+    width: 30rem;
+    height: 30rem;
+    right: -8%;
+    top: -35%;
+    background: radial-gradient(circle, rgba(99, 195, 209, 0.45), transparent 70%);
+    animation: drift-2 27s ease-in-out infinite alternate;
+  }
+  .blob-3 {
+    width: 26rem;
+    height: 26rem;
+    left: 40%;
+    top: 5%;
+    background: radial-gradient(circle, rgba(162, 121, 210, 0.35), transparent 70%);
+    animation: drift-3 31s ease-in-out infinite alternate;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(115, 65, 180, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(115, 65, 180, 0.07) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(115% 85% at 50% 0%, #000 38%, transparent 78%);
+    mask-image: radial-gradient(115% 85% at 50% 0%, #000 38%, transparent 78%);
+  }
+
+  @keyframes drift-1 {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(60px, 40px, 0) scale(1.12);
+    }
+  }
+  @keyframes drift-2 {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(-50px, 36px, 0) scale(1.06);
+    }
+  }
+  @keyframes drift-3 {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(34px, -28px, 0) scale(1.1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .blob {
+      animation: none;
+    }
+  }
+
+  /* ---- foreground ---- */
   .hero-inner {
     position: relative;
+    z-index: 1;
     max-width: 56rem;
   }
   .hero h1 {

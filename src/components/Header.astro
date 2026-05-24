@@ -42,11 +42,28 @@ const t = useTranslations(locale);
       </ul>
       <div class="nav-actions">
         <LanguageSwitcher locale={locale} routeKey={routeKey} sub={sub} />
-        <a class="btn btn-primary" href={localizedPath('contact', locale)}>{t('cta.contact')}</a>
       </div>
     </nav>
   </div>
 </header>
+
+<script>
+  // The mobile menu is a CSS checkbox toggle; close it on outside click, Esc, or link tap.
+  const toggle = document.getElementById('nav-toggle') as HTMLInputElement | null;
+  const header = document.querySelector('.site-header');
+  if (toggle && header) {
+    const close = () => {
+      toggle.checked = false;
+    };
+    document.addEventListener('click', (e) => {
+      if (toggle.checked && e.target instanceof Node && !header.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+    header.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', close));
+  }
+</script>
 
 <style>
   .site-header {

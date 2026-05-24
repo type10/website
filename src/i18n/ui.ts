@@ -4,7 +4,7 @@ import type { Locale, RouteKey } from './routes';
 export const ui = {
   en: {
     'site.name': 'TYPE10 Media',
-    'site.tagline': 'Powering a digitalized world',
+    'site.tagline': 'Senior engineering for platforms that scale',
     'nav.services': 'Services',
     'nav.industries': 'Industries',
     'nav.work': 'Work',
@@ -33,7 +33,7 @@ export const ui = {
   },
   de: {
     'site.name': 'TYPE10 Media',
-    'site.tagline': 'Wir treiben eine digitalisierte Welt voran',
+    'site.tagline': 'Erfahrenes Engineering für Plattformen, die skalieren',
     'nav.services': 'Leistungen',
     'nav.industries': 'Branchen',
     'nav.work': 'Referenzen',
@@ -79,5 +79,4 @@ export const navItems: { route: RouteKey; key: UIKey }[] = [
   { route: 'technologies', key: 'nav.technologies' },
   { route: 'insights', key: 'nav.insights' },
   { route: 'about', key: 'nav.about' },
-  { route: 'contact', key: 'nav.contact' },
 ];

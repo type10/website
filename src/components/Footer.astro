@@ -50,8 +50,6 @@ const columns = [
         <Logo variant="invert" />
         <p class="muted-dark">{t('site.tagline')}.</p>
         <address>
-          {company.address.street}<br />
-          {company.address.postalCode}{' '}{company.address.city}<br />
           <a href={`mailto:${company.email}`}>{company.email}</a><br />
           <a href={`tel:${company.phoneE164}`}>{company.phone}</a>
         </address>
@@ -142,7 +140,7 @@ const columns = [
     flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--space-2);
-    color: #8e87ab;
-    font-size: var(--step--1);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
   }
 </style>
