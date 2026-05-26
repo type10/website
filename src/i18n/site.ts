@@ -19,7 +19,11 @@ export const company = {
     vatId: 'DE289079639',
   },
   social: {
-    twitter: '@type10media',
+    twitter: '@type10media', // handle, used by the twitter:site meta tag
+    github: 'https://github.com/type10',
+    x: 'https://x.com/type10media',
+    linkedin: 'https://linkedin.com/company/type10',
+    xing: 'https://www.xing.com/pages/type10-media-gmbh',
   },
   analytics: {
     gtmId: { en: 'GTM-WKZXF2', de: 'GTM-KM5RLZ' } as Record<'en' | 'de', string>,
