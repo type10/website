@@ -74,7 +74,25 @@ them and the Worker can receive + redirect the request.)
 Register **two** properties — `https://type10.com` and `https://type10.de` — and submit
 `https://type10.com/sitemap.xml` and `https://type10.de/sitemap.xml` respectively.
 
-## Pre-launch checklist
+## Analytics & consent (Google Tag Manager)
 
-- [ ] Confirm the **GA4 property** `G-VGW1F01QDH` is the right stream (or add a per-domain data stream); analytics only fires after consent.
-- [ ] Verify legacy **301s** resolve (see middleware map) and run **Lighthouse** on home + a service + a case study + an article, both locales.
+Each domain has its **own GTM container feeding its own GA4 property** — this is intentional
+(analytics kept separate per market), not a duplicate:
+
+| Domain | GTM container | GA4 property |
+|---|---|---|
+| `type10.de` | `GTM-KM5RLZ` | `G-VGW1F01QDH` |
+| `type10.com` | `GTM-WKZXF2` | `G-X9N0VWSKPR` |
+
+- Container IDs live in `src/i18n/site.ts` (`analytics.gtmId`). The **GA4 Measurement IDs are
+  configured inside each container** (a Google Tag on the GTM "Initialization – All Pages" trigger),
+  **not** in the repo — keep both containers configured identically.
+- Google **Consent Mode v2 (advanced)** is declared in `src/components/Gtm.astro` *before* the
+  container loads: EEA+UK+CH (`src/i18n/consent.ts`) default to denied and wait for the banner
+  (`src/components/ConsentBanner.astro`); rest-of-world gets `analytics_storage` granted.
+- We **only ever grant `analytics_storage`** (ad signals stay denied by design). So GA4/GTM warnings
+  about *ad* consent — "Consent missing for EEA users", container-quality "0% consent rate" — are
+  expected, not bugs. They're **per-property**, so check both consoles.
+- **To verify consent mode is live:** on each domain, DevTools → Network → the GA4 `collect` request
+  should carry `gcs=` (e.g. `G101` = ad denied / analytics granted) and `gcd=`. If present, consent
+  mode is firing; a lingering "consent missing" card is just trailing data and clears within ~a week.

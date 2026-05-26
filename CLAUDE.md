@@ -31,7 +31,8 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 - **Astro 6, `output: 'static'`, `trailingSlash: 'never'`, `build.format: 'file'`** (flat
   `<route>.html`, no trailing slash). No Tailwind — design tokens in
   `src/styles/tokens.css` + `global.css`, plus Astro scoped `<style>` per component.
-  Self-hosted fonts (`@fontsource-variable/{sora,inter}`). React is available for islands but
+  Self-hosted fonts: `@fontsource/sansation` (display, 400/700) + `@fontsource-variable/inter`
+  (body). React is available for islands but
   currently unused; the only JS is small inline scripts (consent banner, mobile-menu close).
 - **i18n:** `defaultLocale: 'en'`, `locales: ['en','de']`, `prefixDefaultLocale: false`.
   English builds at the apex (`/services/`); German builds under `/de/` (`/de/leistungen/`).
@@ -61,9 +62,10 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
   folder names (`leistungen`, `referenzen`, `branchen`, `produkte`, `ueber-uns`,
   `kontakt`, `impressum`, `datenschutz`, `karriere`). Both import the same view component from
   `src/components/views/` and pass `locale`. `[slug].astro` filters the collection by locale.
-- `Base.astro` wraps `Seo` + `Header` + `Footer` + `ConsentBanner`. Pass it `locale`, `routeKey`,
+- `Base.astro` wraps `Gtm` (analytics, first in `<head>`) + `Seo` + `Header` + `Footer` +
+  `ConsentBanner`. Pass it `locale`, `routeKey`,
   and `sub` (= the item slug, for detail pages) so SEO/hreflang resolve correctly.
-- UI strings + nav list: `src/i18n/ui.ts`. Company facts (address, GA id, etc.): `src/i18n/site.ts`.
+- UI strings + nav list: `src/i18n/ui.ts`. Company facts (address, GTM container IDs, etc.): `src/i18n/site.ts`.
 - Drafting both EN + DE is expected; client facts/metrics are supplied by the user.
 
 ## SEO
@@ -75,7 +77,17 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 - **Vitao (vitao.io) links are `dofollow` and contextual only** — product page, Vitao case study,
   `career-hr-tech` industry, `product-engineering` service, the career-tech blog posts, and the
   homepage band. Don't add `nofollow`; don't stuff links sitewide.
-- GA4 (`G-VGW1F01QDH`) loads **only after consent** (`ConsentBanner.astro`).
+- **Analytics — one GTM container per domain, each feeding its own GA4 property:**
+  `type10.de` → `GTM-KM5RLZ` → `G-VGW1F01QDH`; `type10.com` → `GTM-WKZXF2` → `G-X9N0VWSKPR`.
+  Container IDs are in `src/i18n/site.ts` (`analytics.gtmId`); the GA4 Measurement IDs are configured
+  *inside* each container (Google Tag, fired on the GTM "Initialization" trigger), **not** in the repo —
+  keep the two containers configured identically. Google **Consent Mode v2 (advanced)** is declared in
+  `Gtm.astro` *before* the container loads: EEA+UK+CH (`i18n/consent.ts`) default to denied and wait for
+  the banner (`ConsentBanner.astro`); rest-of-world gets `analytics_storage` granted. We only ever grant
+  `analytics_storage` (ad signals stay denied), so GA4/GTM warnings about *ad* consent ("Consent missing
+  for EEA users", "0% consent rate") are expected, not bugs — and they're **per-property**, so check both
+  consoles. The tag loads on every page (cookieless modeled pings while denied); it does **not** wait for
+  consent. Confirm a live `collect` hit carries `gcs`/`gcd` params to verify consent mode is firing.
 
 ## Gotchas (these bit us)
 
@@ -95,4 +107,4 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 See `DEPLOYMENT.md` for the full checklist + Cloudflare Workers/DNS setup. Headlines:
 - Privacy/Datenschutz + Imprint are a template — **needs legal review** (currently `noindex`).
 - AutoScout24 (and RTL+/TVNow) case studies need real scope/metrics, or drop AutoScout24 to logo-only.
-- Confirm the GA4 stream; replace the Vitao placeholder images (`public/assets/work/2024-vitao-*.svg`) with real screenshots; register two Search Console properties.
+- Replace the Vitao placeholder images (`public/assets/work/2024-vitao-*.svg`) with real screenshots; register two Search Console properties. (GA4 + Consent Mode v2 are wired and verified live on both domains — see SEO section.)
