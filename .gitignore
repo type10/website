@@ -28,3 +28,7 @@ pnpm-debug.log*
 
 # vscode (not used)
 .vscode/
+
+.dev.vars*
+!.dev.vars.example
+!.env.example
