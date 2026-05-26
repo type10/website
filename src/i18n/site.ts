@@ -22,6 +22,6 @@ export const company = {
     twitter: '@type10media',
   },
   analytics: {
-    ga4Id: 'G-VGW1F01QDH',
+    gtmId: { en: 'GTM-WKZXF2', de: 'GTM-KM5RLZ' } as Record<'en' | 'de', string>,
   },
 } as const;

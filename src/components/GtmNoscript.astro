@@ -1,0 +1,23 @@
+---
+// Google Tag Manager <noscript> fallback. Must be placed immediately after the opening
+// <body> tag (see Base.astro). Container ID matches the head snippet, chosen per domain.
+import { company } from '../i18n/site';
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const gtmId = company.analytics.gtmId[locale];
+---
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe
+    src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+    height="0"
+    width="0"
+    style="display:none;visibility:hidden"
+    title="Google Tag Manager"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->

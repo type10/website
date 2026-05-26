@@ -1,14 +1,13 @@
 ---
-import { company } from '../i18n/site';
 import { localizedPath } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
+import { CONSENT_REQUIRED_REGIONS as regions } from '../i18n/consent';
 import type { Locale } from '../i18n/routes';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
-const GA = company.analytics.ga4Id;
 const t = useTranslations(locale);
 
 const copy = {
@@ -34,10 +33,19 @@ const privacyHref = localizedPath('privacy', locale);
   </div>
 </div>
 
-<script define:vars={{ GA }} is:inline>
+<script is:inline define:vars={{ regions }}>
+  // Drives Google Consent Mode for the GTM containers (see Gtm.astro), which sets the
+  // defaults before GTM loads. The banner is shown ONLY in consent-required regions
+  // (EEA + UK + CH); elsewhere analytics is granted by the region default and no banner
+  // appears. Region comes from Cloudflare's edge trace; if it can't be determined
+  // (incl. local/preview) the visitor is treated as restricted so we never under-ask.
   (function () {
     var KEY = 't10_consent';
     var el = document.getElementById('t10-consent');
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
     function get() {
       try {
         return localStorage.getItem(KEY);
@@ -50,40 +58,52 @@ const privacyHref = localizedPath('privacy', locale);
         localStorage.setItem(KEY, v);
       } catch (e) {}
     }
-    function loadGA() {
-      if (window.__t10ga) return;
-      window.__t10ga = true;
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
-      document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA, { anonymize_ip: true });
-    }
-    var c = get();
-    if (c === 'granted') {
-      loadGA();
-    } else if (c !== 'denied' && el) {
-      el.hidden = false;
+    function choose(value) {
+      set(value);
+      gtag('consent', 'update', { analytics_storage: value });
+      window.dataLayer.push({ event: 'consent_update', analytics_consent: value });
+      if (el) el.hidden = true;
     }
     var a = document.getElementById('t10-accept');
     var d = document.getElementById('t10-decline');
-    if (a)
-      a.addEventListener('click', function () {
-        set('granted');
-        if (el) el.hidden = true;
-        loadGA();
-      });
-    if (d)
-      d.addEventListener('click', function () {
-        set('denied');
-        if (el) el.hidden = true;
-      });
+    if (a) a.addEventListener('click', function () { choose('granted'); });
+    if (d) d.addEventListener('click', function () { choose('denied'); });
+
+    // Already decided → never show again (Gtm.astro re-applied the choice in <head>).
+    var c = get();
+    if (c === 'granted' || c === 'denied') return;
+
+    // Otherwise show the banner only in consent-required regions.
+    function inRestrictedRegion(cb) {
+      var cached = null;
+      try {
+        cached = sessionStorage.getItem('t10_geo');
+      } catch (e) {}
+      if (cached) {
+        cb(regions.indexOf(cached) !== -1);
+        return;
+      }
+      fetch('/cdn-cgi/trace')
+        .then(function (r) {
+          return r.text();
+        })
+        .then(function (txt) {
+          var m = txt.match(/(?:^|\n)loc=([A-Z]{2})/);
+          var loc = m ? m[1] : '';
+          try {
+            if (loc) sessionStorage.setItem('t10_geo', loc);
+          } catch (e) {}
+          cb(loc ? regions.indexOf(loc) !== -1 : true); // unknown → restricted (safe)
+        })
+        .catch(function () {
+          cb(true); // trace unavailable (e.g. local/preview) → restricted (safe)
+        });
+    }
+
+    inRestrictedRegion(function (restricted) {
+      if (restricted && el) el.hidden = false;
+      // Rest of the world: leave hidden; analytics is granted by the region default.
+    });
   })();
 </script>
 
