@@ -33,7 +33,7 @@
 
   /* Typography */
   --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Sora Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-display: 'Sansation', 'Inter Variable', system-ui, sans-serif;
 
   /* Fluid type scale */
   --step--1: clamp(0.83rem, 0.8rem + 0.18vw, 0.94rem);
