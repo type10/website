@@ -5,6 +5,7 @@ import Breadcrumbs from '../Breadcrumbs.astro';
 import CTA from '../CTA.astro';
 import { localizedPath } from '../../i18n/routes';
 import { useTranslations } from '../../i18n/ui';
+import { SOCIAL_ICON_PATHS } from '../../lib/socialIcons';
 import type { Locale } from '../../i18n/routes';
 
 interface Props {
@@ -57,10 +58,22 @@ const copy = {
             <h2>{data.name}</h2>
             <p class="role">{data.jobtitle}</p>
             <ul class="social">
-              {data.links.github && (<li><a href={data.links.github} rel="noopener" target="_blank">GitHub</a></li>)}
-              {data.links.linkedin && (<li><a href={data.links.linkedin} rel="noopener" target="_blank">LinkedIn</a></li>)}
-              {data.links.xing && (<li><a href={data.links.xing} rel="noopener" target="_blank">Xing</a></li>)}
-              {data.links.twitter && (<li><a href={data.links.twitter} rel="noopener" target="_blank">Twitter</a></li>)}
+              {[
+                { label: 'GitHub', href: data.links.github, path: SOCIAL_ICON_PATHS.github },
+                { label: 'LinkedIn', href: data.links.linkedin, path: SOCIAL_ICON_PATHS.linkedin },
+                { label: 'XING', href: data.links.xing, path: SOCIAL_ICON_PATHS.xing },
+                { label: 'X', href: data.links.twitter, path: SOCIAL_ICON_PATHS.x },
+              ]
+                .filter((s) => s.href)
+                .map((s) => (
+                  <li>
+                    <a href={s.href} aria-label={s.label} rel="noopener" target="_blank">
+                      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d={s.path} />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
             </ul>
             {data.skillProfile && (
               <a class="btn btn-ghost" href={data.skillProfile} target="_blank" rel="noopener">{copy.profile}</a>
@@ -120,6 +133,20 @@ const copy = {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    font-size: var(--step--1);
+  }
+  .social a {
+    display: inline-flex;
+    padding: 0.4rem;
+    margin: -0.4rem;
+    color: var(--ink-500);
+    border-radius: var(--radius);
+    transition: color 0.15s ease;
+  }
+  .social a:hover,
+  .social a:focus-visible {
+    color: var(--brand);
+  }
+  .social svg {
+    display: block;
   }
 </style>
