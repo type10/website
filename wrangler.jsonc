@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Must match the existing Worker so the deploy updates it (and keeps the custom
+  // domains type10.com / .de + www already attached under Domains & Routes).
+  "name": "type10-website",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-05-23",
+  // One static build (Astro `dist/`) serves both domains; worker/index.ts does the
+  // host-based routing. run_worker_first:true is REQUIRED — otherwise an existing
+  // asset (e.g. dist/index.html) is served before the Worker runs, so type10.de
+  // would render the English apex (the bug this replaces).
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    // Site is trailingSlash:'never' + build.format:'file' (flat *.html).
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

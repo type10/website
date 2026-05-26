@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 import minifyInlineScripts from './scripts/minify-inline-scripts.mjs';
 
 // EN is served at the apex of type10.com; DE is built under /de/ and served at the
-// apex of type10.de via a Cloudflare Pages Function (see functions/_middleware.ts).
+// apex of type10.de via the routing Worker (see worker/index.ts + wrangler.jsonc).
 // `site` is the English canonical base; DE canonicals/hreflang are computed per-page
 // from src/i18n/routes.ts (publicUrl/alternatesFor) against https://type10.de.
 export default defineConfig({

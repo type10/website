@@ -9,13 +9,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "preview:cf": "astro build && wrangler pages dev dist --compatibility-date=2024-05-01 --port 8788",
-    "check": "astro check",
+    "preview:cf": "astro build && wrangler dev --port 8788",
+    "check": "astro check && tsc -p worker/tsconfig.json",
     "check:seo": "npm run build && node scripts/check-seo.mjs",
     "astro": "astro",
-    "cloudflare:setup": "wrangler pages deploy dist --project-name=website",
     "cloudflare:login": "wrangler login",
-    "cloudflare:deploy": "wrangler pages deploy dist --project-name=website"
+    "cloudflare:deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",

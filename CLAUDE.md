@@ -9,33 +9,41 @@ migration sources at `../current_en` and `../current_de`).
 
 ```bash
 npm run dev        # English dev server (localhost:4321); fast iteration
-npm run preview:cf # astro build + wrangler pages dev — BOTH domains via the real middleware
+npm run preview:cf # astro build + wrangler dev — BOTH domains via the real routing Worker
 npm run build      # static build to dist/
-npm run check      # astro check (type-check .astro + TS)
+npm run check      # astro check (.astro + TS) AND tsc on worker/ (the routing Worker)
 npm run check:seo  # post-build guard: canonical host + hreflang on every page (run after build)
 ```
 
-`functions/` is type-checked separately: `npx tsc -p functions/tsconfig.json`.
+The routing Worker (`worker/`) uses Workers types, not Astro/DOM types, so it has its own
+`worker/tsconfig.json` (excluded from the root config) and is type-checked by `npm run check`.
 After any change, run `npm run build` and `npm run check`; for SEO-affecting changes also
 `npm run check:seo`. To preview German: `npm run preview:cf` then visit `?__lang=de` or
 `curl -H "Host: type10.de" localhost:8788/...`.
 
+> **Deployment is a Cloudflare *Worker* with static assets, not Pages.** `wrangler.jsonc`
+> sets `assets.run_worker_first: true` so `worker/index.ts` runs on every request and can do
+> host-based routing. Pages Functions (`functions/`) do **not** run in this model — that's why
+> the routing lives in `worker/`. Deployed via GitHub auto-build (Workers Builds).
+
 ## Architecture
 
-- **Astro 6, `output: 'static'`, `trailingSlash: 'always'`.** No Tailwind — design tokens in
+- **Astro 6, `output: 'static'`, `trailingSlash: 'never'`, `build.format: 'file'`** (flat
+  `<route>.html`, no trailing slash). No Tailwind — design tokens in
   `src/styles/tokens.css` + `global.css`, plus Astro scoped `<style>` per component.
   Self-hosted fonts (`@fontsource-variable/{sora,inter}`). React is available for islands but
   currently unused; the only JS is small inline scripts (consent banner, mobile-menu close).
 - **i18n:** `defaultLocale: 'en'`, `locales: ['en','de']`, `prefixDefaultLocale: false`.
   English builds at the apex (`/services/`); German builds under `/de/` (`/de/leistungen/`).
-- **Two-domain routing lives in `functions/_middleware.ts`** (Cloudflare Pages Function, runs
-  before assets):
+- **Two-domain routing lives in `worker/index.ts`** (the Worker entry; runs on every request
+  via `run_worker_first`, then delegates to `env.ASSETS.fetch()`):
+  - `www.*` → 301 to the bare apex (canonical host).
   - `type10.com` → English at apex; `/de/*` is 301'd to `type10.de`.
   - `type10.de` → the `/de/` tree is **rewritten** to the apex so URLs stay clean
-    (`type10.de/leistungen/`). `/robots.txt` and `/sitemap.xml` resolve to their `/de/` variants;
-    German 404 falls back to `/de/404/index.html`.
+    (`type10.de/leistungen`). `/robots.txt` and `/sitemap.xml` resolve to their `/de/` variants;
+    German 404 falls back to `/de/404.html`.
   - Legacy 301s (old Eleventy/Jekyll URLs → new) run first.
-  - Previews (`*.pages.dev`/localhost) have no real host → `?__lang=de` opts into German.
+  - Previews (`*.workers.dev`/localhost) have no real host → `?__lang=de` opts into German.
 - **`src/i18n/routes.ts` is the single source of truth** for the URL structure. Item slugs are
   **identical across locales**; only the section segment is localized (`services`↔`leistungen`,
   `work`↔`referenzen`, …). Helpers: `localizedPath` (in-site href), `buildPath` (physical `/de/…`),
@@ -73,8 +81,9 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 
 - An external linter/formatter reformats files between edits — **re-Read a file right before
   editing** if an Edit fails with "not read"/"modified since read".
-- `trailingSlash: 'always'` builds nested pages to `<route>/index.html` (e.g. the German 404 is
-  `/de/404/index.html`, not `/de/404.html`) — the middleware accounts for this.
+- `trailingSlash: 'never'` + `build.format: 'file'` builds flat `<route>.html` (the German 404
+  is `/de/404.html`). The Worker also 301-strips any trailing slash, and `wrangler.jsonc` sets
+  `html_handling: 'drop-trailing-slash'` so the asset layer agrees.
 - CSS that sets `display:` on an element also toggled via the `[hidden]` attribute must add an
   explicit `…[hidden]{display:none}` rule (class+attr beats bare `[hidden]`). This is why the
   consent banner has one.
@@ -83,7 +92,7 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
 
 ## Open items before launch
 
-See `DEPLOYMENT.md` for the full checklist + Cloudflare Pages/DNS setup. Headlines:
+See `DEPLOYMENT.md` for the full checklist + Cloudflare Workers/DNS setup. Headlines:
 - Privacy/Datenschutz + Imprint are a template — **needs legal review** (currently `noindex`).
 - AutoScout24 (and RTL+/TVNow) case studies need real scope/metrics, or drop AutoScout24 to logo-only.
 - Confirm the GA4 stream; replace the Vitao placeholder images (`public/assets/work/2024-vitao-*.svg`) with real screenshots; register two Search Console properties.
