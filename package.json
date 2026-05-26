@@ -8,16 +8,19 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "preview:cf": "astro build && wrangler pages dev dist --compatibility-date=2024-05-01 --port 8788",
     "check": "astro check",
     "check:seo": "npm run build && node scripts/check-seo.mjs",
     "astro": "astro",
     "cloudflare:setup": "wrangler pages deploy dist --project-name=website",
     "cloudflare:login": "wrangler login",
-    "cloudflare:deploy": "wrangler pages deploy dist --project-name=website"
+    "cloudflare:deploy": "wrangler pages deploy dist --project-name=website",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.5.4",
     "@astrojs/mdx": "^5.0.6",
     "@astrojs/react": "^5.0.5",
     "@astrojs/sitemap": "^3.7.2",
@@ -35,5 +38,8 @@
     "esbuild": "^0.28.0",
     "typescript": "^6.0.3",
     "wrangler": "^4.94.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
