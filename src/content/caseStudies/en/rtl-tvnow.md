@@ -28,5 +28,3 @@ We consulted on and **developed new features for the RTL+ Smart-TV OTT app**, wo
 ## Why it mattered
 
 OTT apps on living-room hardware are an unforgiving environment: constrained devices, big audiences and no room for a janky experience. Solid frontend engineering and well-shaped services are what keep the picture smooth.
-
-*Engagement details such as exact scope and outcomes can be expanded with figures from the project owner.*

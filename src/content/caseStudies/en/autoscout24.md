@@ -23,5 +23,3 @@ AutoScout24 is one of Europe's largest online automotive marketplaces, connectin
 ## What we did
 
 TYPE10 Media worked with AutoScout24 as an engineering consulting partner, bringing the same marketplace and platform experience we built at companies like [Lusini](/work/lusini/) and [CHECK24](/work/check24-pkv/).
-
-*The specific scope, stack and outcomes of this engagement are being confirmed with the project owner and will be expanded here before launch.*

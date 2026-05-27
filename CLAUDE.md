@@ -101,10 +101,3 @@ After any change, run `npm run build` and `npm run check`; for SEO-affecting cha
   consent banner has one.
 - Customer logos were 250×250 squares with transparent padding; trimmed via
   `scripts/trim-logos.mjs` (reads originals in `../current_en`, writes `public/assets/customers/`).
-
-## Open items before launch
-
-See `DEPLOYMENT.md` for the full checklist + Cloudflare Workers/DNS setup. Headlines:
-- Privacy/Datenschutz + Imprint are a template — **needs legal review** (currently `noindex`).
-- AutoScout24 (and RTL+/TVNow) case studies need real scope/metrics, or drop AutoScout24 to logo-only.
-- Replace the Vitao placeholder images (`public/assets/work/2024-vitao-*.svg`) with real screenshots; register two Search Console properties. (GA4 + Consent Mode v2 are wired and verified live on both domains — see SEO section.)

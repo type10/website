@@ -28,5 +28,3 @@ Wir berieten und **entwickelten neue Features für die RTL+-Smart-TV-OTT-App**, 
 ## Warum es wichtig war
 
 OTT-Apps auf Wohnzimmer-Hardware sind eine unversöhnliche Umgebung: eingeschränkte Geräte, große Zielgruppen und kein Raum für ein hakeliges Erlebnis. Solides Frontend-Engineering und gut geschnittene Services halten das Bild flüssig.
-
-*Details wie genauer Umfang und Ergebnisse lassen sich mit Kennzahlen der Projektverantwortlichen ergänzen.*
