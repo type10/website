@@ -4,7 +4,7 @@ slug: chris
 title: Christian Neuhäuser
 name: Christian Neuhäuser
 jobtitle: Geschäftsführer & Consultant
-image: /assets/team/chris_header.png
+image: /assets/team/chris.png
 order: 1
 links:
   github: https://github.com/kwizzn

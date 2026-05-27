@@ -84,6 +84,10 @@ p {
 .section-tight {
   padding-block: var(--space-6);
 }
+/* First section after a page header sits closer to it */
+.page-header + .section {
+  padding-top: var(--space-4);
+}
 .surface-alt {
   background: var(--paper-alt);
 }

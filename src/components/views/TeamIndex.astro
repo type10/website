@@ -24,15 +24,23 @@ const rendered = await Promise.all(
 const copy = {
   en: {
     eyebrow: 'Team',
-    title: 'The people behind TYPE10',
-    lead: 'Deliberately small, deliberately senior. The person you talk to is the person who does the work.',
+    title: 'The face behind TYPE10',
+    lead: 'Deliberately small, deliberately senior. The person you talk to is the person who gets the work done and the network coordinated.',
     profile: 'Skill profile (PDF)',
+    networkEyebrow: 'Our network',
+    networkTitle: 'A senior core, backed by a trusted network',
+    networkBody:
+      'When a project needs more hands or a specific specialism, we draw on a proven network of senior freelancers across the stack — frontend, backend, infrastructure, data and design. TYPE10 stays your single point of accountability: we pick the right people, brief them, and own the delivery from first commit to handover.',
   },
   de: {
     eyebrow: 'Team',
-    title: 'Die Menschen hinter TYPE10',
-    lead: 'Bewusst klein, bewusst erfahren. Die Person, mit der Sie sprechen, ist die Person, die die Arbeit macht.',
+    title: 'Das Gesicht hinter TYPE10',
+    lead: 'Bewusst klein, bewusst erfahren. Die Person, mit der Sie sprechen, ist die Person, die die Arbeit erledigt und das Netzwerk koordiniert.',
     profile: 'Skill-Profil (PDF)',
+    networkEyebrow: 'Unser Netzwerk',
+    networkTitle: 'Ein erfahrener Kern, gestützt von einem vertrauten Netzwerk',
+    networkBody:
+      'Wenn ein Projekt mehr Hände oder ein bestimmtes Spezialgebiet braucht, greifen wir auf ein bewährtes Netzwerk erfahrener Freelancer über den gesamten Stack zurück — Frontend, Backend, Infrastruktur, Daten und Design. TYPE10 bleibt Ihr zentraler Ansprechpartner: Wir wählen die richtigen Leute aus, briefen sie und verantworten die Lieferung vom ersten Commit bis zur Übergabe.',
   },
 }[locale];
 ---
@@ -49,42 +57,54 @@ const copy = {
 </PageHeader>
 
 <section class="section">
-  <div class="container">
+  <div class="container container-narrow">
     {
       rendered.map(({ data, Content }) => (
         <article class="member">
-          <div class="member-side">
-            {data.image && <img src={data.image} alt={data.name} width="320" height="320" />}
-            <h2>{data.name}</h2>
-            <p class="role">{data.jobtitle}</p>
-            <ul class="social">
-              {[
-                { label: 'GitHub', href: data.links.github, path: SOCIAL_ICON_PATHS.github },
-                { label: 'LinkedIn', href: data.links.linkedin, path: SOCIAL_ICON_PATHS.linkedin },
-                { label: 'XING', href: data.links.xing, path: SOCIAL_ICON_PATHS.xing },
-                { label: 'X', href: data.links.twitter, path: SOCIAL_ICON_PATHS.x },
-              ]
-                .filter((s) => s.href)
-                .map((s) => (
-                  <li>
-                    <a href={s.href} aria-label={s.label} rel="noopener" target="_blank">
-                      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-                        <path fill="currentColor" d={s.path} />
-                      </svg>
-                    </a>
-                  </li>
-                ))}
-            </ul>
-            {data.skillProfile && (
-              <a class="btn btn-ghost" href={data.skillProfile} target="_blank" rel="noopener">{copy.profile}</a>
+          <header class="member-head">
+            {data.image && (
+              <img class="member-photo" src={data.image} alt={data.name} width="320" height="320" />
             )}
-          </div>
+            <div class="member-id">
+              <h2>{data.name}</h2>
+              <p class="role">{data.jobtitle}</p>
+              <ul class="social">
+                {[
+                  { label: 'GitHub', href: data.links.github, path: SOCIAL_ICON_PATHS.github },
+                  { label: 'LinkedIn', href: data.links.linkedin, path: SOCIAL_ICON_PATHS.linkedin },
+                  { label: 'XING', href: data.links.xing, path: SOCIAL_ICON_PATHS.xing },
+                  { label: 'X', href: data.links.twitter, path: SOCIAL_ICON_PATHS.x },
+                ]
+                  .filter((s) => s.href)
+                  .map((s) => (
+                    <li>
+                      <a href={s.href} aria-label={s.label} rel="noopener" target="_blank">
+                        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                          <path fill="currentColor" d={s.path} />
+                        </svg>
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+              {data.skillProfile && (
+                <a class="btn btn-ghost" href={data.skillProfile} target="_blank" rel="noopener">{copy.profile}</a>
+              )}
+            </div>
+          </header>
           <div class="member-bio prose">
             <Content />
           </div>
         </article>
       ))
     }
+  </div>
+</section>
+
+<section class="section surface-alt">
+  <div class="container container-narrow">
+    <span class="eyebrow">{copy.networkEyebrow}</span>
+    <h2>{copy.networkTitle}</h2>
+    <p class="muted">{copy.networkBody}</p>
   </div>
 </section>
 
@@ -96,34 +116,41 @@ const copy = {
 />
 
 <style>
-  .member {
-    display: grid;
-    gap: var(--space-5);
-    align-items: start;
-  }
   .member + .member {
     margin-top: var(--space-6);
     padding-top: var(--space-6);
     border-top: 1px solid var(--line);
   }
-  @media (min-width: 760px) {
-    .member {
-      grid-template-columns: 300px minmax(0, 1fr);
+  .member-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 560px) {
+    .member-head {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-4);
     }
   }
-  .member-side img {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius);
+  .member-photo {
+    flex: none;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
     border: 1px solid var(--line);
-    margin-bottom: var(--space-3);
   }
-  .member-side h2 {
+  .member-id h2 {
     font-size: var(--step-2);
   }
   .role {
     color: var(--brand);
     font-weight: 600;
+    margin-top: var(--space-1);
     margin-bottom: var(--space-2);
   }
   .social {
