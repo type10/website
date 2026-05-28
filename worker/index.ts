@@ -6,6 +6,7 @@
 // off to the static asset server via env.ASSETS.fetch().
 //
 // One build serves both domains:
+//   - http://*    -> 301 to https:// (canonical scheme; combined with www-strip to save a hop)
 //   - www.*       -> 301 to the bare apex (canonical host)
 //   - type10.com  -> English at the apex; any /de/* is 301'd to type10.de
 //   - type10.de   -> German tree (built under /de/) served at the apex via rewrite
@@ -88,11 +89,13 @@ export default {
     const host = (request.headers.get('host') ?? url.hostname).toLowerCase();
     const path = url.pathname;
 
-    // ---- www -> apex (canonical host), preserving path + query ----
-    // Runs first so every later host check sees the bare apex.
-    if (host.startsWith('www.')) {
+    // ---- www -> apex, http -> https, preserving path + query ----
+    const needsHttps = url.protocol === 'http:';
+    const needsApex = host.startsWith('www.');
+    if (needsHttps || needsApex) {
       const target = new URL(url);
-      target.hostname = host.slice('www.'.length);
+      if (needsHttps) target.protocol = 'https:';
+      if (needsApex) target.hostname = host.slice('www.'.length);
       return Response.redirect(target.toString(), 301);
     }
 
