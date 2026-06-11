@@ -17,6 +17,7 @@ featured: true
 order: 5
 seo:
   description: TYPE10 Media unterstützte das Lusini-Scrum-Team beim Aufbau des Store-Frontends und eines Node.js-API-Backends im testgetriebenen Continuous-Integration-Prozess.
+  noindex: true
 ---
 
 Lusini ist ein B2B-Marktplatz für Gastronomie- und Hotelleriebedarf. TYPE10 Media unterstützte das Scrum-Team beim Aufbau der nächsten Store-Generation.

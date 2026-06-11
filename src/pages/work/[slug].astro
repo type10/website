@@ -20,6 +20,7 @@ const title = d.seo?.title ?? `${d.title} — TYPE10 Media`;
   title={title}
   description={d.seo?.description ?? d.summary}
   ogImage={d.seo?.ogImage ?? d.heroImage}
+  noindex={d.seo?.noindex}
 >
   <CaseStudyDetail locale="en" entry={entry} />
 </Base>

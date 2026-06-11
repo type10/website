@@ -34,8 +34,8 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
   for (const { coll, key } of collections) {
     const items = await getCollection(
       coll,
-      (e: { data: { locale: string; slug: string; draft?: boolean } }) =>
-        e.data.locale === 'en' && !e.data.draft
+      (e: { data: { locale: string; slug: string; draft?: boolean; seo?: { noindex?: boolean } } }) =>
+        e.data.locale === 'en' && !e.data.draft && !e.data.seo?.noindex
     );
     for (const it of items) entries.push({ key, sub: it.data.slug });
   }
